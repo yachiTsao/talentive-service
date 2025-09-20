@@ -1,21 +1,231 @@
 [
   {
-    "title": "數位行銷專員/市場行銷/行銷專案(FMCG快速銷售品)遠端",
-    "company": "",
-    "location": "臺北市",
-    "salary": "NT$ 240 - 240 (時薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/prohallmarks/jobs/36550",
+    "title": "Python軟體工程師",
+    "company": "微程式資訊股份有限公司",
+    "location": "台中市西屯區",
+    "salary": "待遇面議",
+    "date": "20250918",
+    "url": "https://www.104.com.tw/job/14840743",
     "page": 1,
-    "source": "yourator"
+    "source": "104"
   },
   {
-    "title": "行銷社群經理(FMCG品類)",
+    "title": "【全端開發工程師(後台系統)】Full-Stack Developer(Backend Systems)",
+    "company": "智鈦星平台服務有限公司",
+    "location": "台北市信義區",
+    "salary": "待遇面議",
+    "date": "20250919",
+    "url": "https://www.104.com.tw/job/14691330",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "RiConnect, Inc._振鈺數位服務股份有限公司",
+    "location": "台中市北屯區",
+    "salary": "待遇面議",
+    "date": "20250903",
+    "url": "https://www.104.com.tw/job/13536822",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師 Frontend Engineer",
+    "company": "飛起來行銷股份有限公司",
+    "location": "台南市中西區",
+    "salary": "月薪34,000元以上",
+    "date": "20250919",
+    "url": "https://www.104.com.tw/job/14772890",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "先鋒機械股份有限公司",
+    "location": "新北市土城區",
+    "salary": "月薪55,000~80,000元",
+    "date": "20250912",
+    "url": "https://www.104.com.tw/job/12323614",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "【資訊板塊】前端工程師 Frontend Engineer_I00008636",
+    "company": "國泰世華商業銀行股份有限公司",
+    "location": "台北市內湖區",
+    "salary": "待遇面議",
+    "date": "20250917",
+    "url": "https://www.104.com.tw/job/14266052",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "聖勝科技有限公司",
+    "location": "台北市內湖區",
+    "salary": "月薪40,000~50,000元",
+    "date": "20250915",
+    "url": "https://www.104.com.tw/job/14835229",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "資深前端工程師 (Sr. Frontend Engineer)",
+    "company": "新銳數位股份有限公司",
+    "location": "台北市信義區",
+    "salary": "年薪900,000~1,200,000元",
+    "date": "20250917",
+    "url": "https://www.104.com.tw/job/14780616",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "加林軟體科技有限公司",
+    "location": "台北市信義區",
+    "salary": "月薪30,000~70,000元",
+    "date": "20250819",
+    "url": "https://www.104.com.tw/job/13799855",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "&lt;Atlas&gt;前端工程師 Frontend Engineer",
+    "company": "伊雲谷數位科技股份有限公司",
+    "location": "新北市三重區",
+    "salary": "待遇面議",
+    "date": "20250916",
+    "url": "https://www.104.com.tw/job/13836623",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師Frontend Engineer",
+    "company": "民視_民間全民電視股份有限公司",
+    "location": "新北市林口區",
+    "salary": "待遇面議",
+    "date": "20250827",
+    "url": "https://www.104.com.tw/job/14795573",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "雲之萃顧問股份有限公司",
+    "location": "台北市大安區",
+    "salary": "月薪35,000~55,000元",
+    "date": "20250920",
+    "url": "https://www.104.com.tw/job/13845991",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "商拓財經有限公司",
+    "location": "台北市信義區",
+    "salary": "月薪40,000~65,000元",
+    "date": "20250915",
+    "url": "https://www.104.com.tw/job/14432223",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師(Vue.js)",
+    "company": "大放娛樂有限公司",
+    "location": "台北市信義區",
+    "salary": "待遇面議",
+    "date": "20250228",
+    "url": "https://www.104.com.tw/job/14483705",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "創意尖端資訊工作室",
+    "location": "台中市北區",
+    "salary": "待遇面議",
+    "date": "20250815",
+    "url": "https://www.104.com.tw/job/14764160",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師｜Frontend Engineer",
+    "company": "維肯媒體股份有限公司",
+    "location": "台北市信義區",
+    "salary": "月薪50,000~80,000元",
+    "date": "20250917",
+    "url": "https://www.104.com.tw/job/12868791",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "可思科技股份有限公司",
+    "location": "台北市中正區",
+    "salary": "月薪55,000~65,000元",
+    "date": "20250821",
+    "url": "https://www.104.com.tw/job/11728347",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "Web Game Frontend Engineer 網頁遊戲前端工程師 (台中)",
+    "company": "樂艷有限公司",
+    "location": "台中市北區",
+    "salary": "月薪40,000~80,000元",
+    "date": "20250507",
+    "url": "https://www.104.com.tw/job/14629751",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "重高科技股份有限公司",
+    "location": "台北市大安區",
+    "salary": "待遇面議",
+    "date": "20250916",
+    "url": "https://www.104.com.tw/job/13903230",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "【企劃部-數位行銷】前端工程師 Frontend Engineer",
+    "company": "甲山林集團_愛山林建設開發股份有限公司",
+    "location": "台北市中山區",
+    "salary": "待遇面議",
+    "date": "20250907",
+    "url": "https://www.104.com.tw/job/14540087",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "前端工程師",
+    "company": "塞席爾商瑞迪寰宇股份有限公司台灣分公司",
+    "location": "台中市西屯區",
+    "salary": "月薪45,000~70,000元",
+    "date": "20250911",
+    "url": "https://www.104.com.tw/job/14038468",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "應用系統前端工程師 丨Frontend Engineer",
+    "company": "永聯物流開發股份有限公司",
+    "location": "台北市內湖區",
+    "salary": "待遇面議",
+    "date": "20250916",
+    "url": "https://www.104.com.tw/job/14419402",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "簡訊設計｜專案經理 Project Manager（動畫設計為主）",
     "company": "",
     "location": "臺北市",
-    "salary": "NT$ 37,000 - 47,000 (月薪)",
+    "salary": "NT$ 42,000 - 48,000 (月薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/prohallmarks/jobs/36510",
+    "url": "https://www.yourator.co/companies/simpleinfo/jobs/41971",
     "page": 1,
     "source": "yourator"
   },
@@ -30,52 +240,62 @@
     "source": "yourator"
   },
   {
-    "title": "【點點簽】後端工程師 Back End Engineer(台南/Tainan)",
-    "company": "",
-    "location": "臺南市",
-    "salary": "NT$ 50,000 - 70,000 (月薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/KdanMobile/jobs/37695",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
-    "title": "【點點簽】資深產品經理 Sr.Product Manager(台南)",
-    "company": "",
-    "location": "臺南市",
-    "salary": "面議（經常性薪資達4萬元）",
-    "date": "",
-    "url": "https://www.yourator.co/companies/KdanMobile/jobs/40651",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
-    "title": "【Fintech】帳務主管/組長/經理  (金融科技|非博弈|餐費輔助及週末津貼|完整教育訓練)",
+    "title": "數位行銷專員/市場行銷/行銷專案(FMCG快速銷售品)遠端",
     "company": "",
     "location": "臺北市",
-    "salary": "NT$ 55,000 - 80,000 (月薪)",
+    "salary": "NT$ 240 - 240 (時薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/ha-fintech/jobs/41823",
+    "url": "https://www.yourator.co/companies/prohallmarks/jobs/36550",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "資深後端工程師  (PHP Laravel) Senior Backend Engineer",
+    "title": "簡訊設計｜助理 PM（動畫設計為主）",
     "company": "",
     "location": "臺北市",
-    "salary": "面議（經常性薪資達4萬元）",
+    "salary": "NT$ 35,000 - 45,000 (月薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/VoiceTube/jobs/41932",
+    "url": "https://www.yourator.co/companies/simpleinfo/jobs/41972",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "【Fintech】支付運營經理 Settlement Operations Manager  (金融科技|非博弈|海外市場|整合支付)",
+    "title": "行銷社群經理(FMCG品類)",
     "company": "",
     "location": "臺北市",
-    "salary": "面議（經常性薪資達4萬元）",
+    "salary": "NT$ 37,000 - 47,000 (月薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/ha-fintech/jobs/41827",
+    "url": "https://www.yourator.co/companies/prohallmarks/jobs/36510",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "QA 軟體測試工程師",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 50,000 - 80,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/hwitech/jobs/40913",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "Account Manager",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 35,000 - 42,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/Fantimate/jobs/37872",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "專案經理 Project Manager",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 40,000 - 60,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/STR-Network/jobs/28865",
     "page": 1,
     "source": "yourator"
   },
@@ -90,52 +310,22 @@
     "source": "yourator"
   },
   {
-    "title": ".Net 軟體工程師",
-    "company": "",
-    "location": "臺北市",
-    "salary": "NT$ 50,000 - 80,000 (月薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/hwitech/jobs/40996",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
-    "title": "產品 / 營運專案經理｜Product Manager",
-    "company": "",
-    "location": "新北市",
-    "salary": "NT$ 55,000 - 75,000 (月薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/AmazingTalker/jobs/39586",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
-    "title": "【Fintech】文字客服 儲備組長/主管 ( 起薪40K起 | 金融科技| 完整教育訓練 | 非博弈 )",
-    "company": "",
-    "location": "臺北市",
-    "salary": "NT$ 40,000 - 55,000 (月薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/ha-fintech/jobs/41809",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
-    "title": "【Fintech】結算運營總監Associate Director, Settlement Operations   (金融科技|非博弈|海外市場|整合支付)",
-    "company": "",
-    "location": "臺北市",
-    "salary": "面議（經常性薪資達4萬元）",
-    "date": "",
-    "url": "https://www.yourator.co/companies/ha-fintech/jobs/41826",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
     "title": "APP 軟體工程師",
     "company": "",
     "location": "臺北市",
     "salary": "NT$ 50,000 - 90,000 (月薪)",
     "date": "",
     "url": "https://www.yourator.co/companies/hwitech/jobs/40959",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "內容與創作者社群經理",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 55,000 - 90,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/iCHEF/jobs/41875",
     "page": 1,
     "source": "yourator"
   },
@@ -150,52 +340,82 @@
     "source": "yourator"
   },
   {
-    "title": "兼職人資總務助理",
+    "title": "【AmazingTalker】營運行政工讀生",
     "company": "",
-    "location": "臺北市",
-    "salary": "NT$ 190 - 200 (時薪)",
+    "location": "新北市",
+    "salary": "NT$ 200 - 220 (時薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/STR-Network/jobs/39253",
+    "url": "https://www.yourator.co/companies/AmazingTalker/jobs/19424",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "商業開發經理 Business Development Manager",
+    "title": ".Net 軟體工程師",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 50,000 - 80,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/hwitech/jobs/40996",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "iCHEF 客服人員(台中地區）",
+    "company": "",
+    "location": "臺中市",
+    "salary": "NT$ 32,000 - 40,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/iCHEF/jobs/35849",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "Testing & Office Intern",
+    "company": "",
+    "location": "臺北市",
+    "salary": "NT$ 225 - 225 (時薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/PicCollage/jobs/41551",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "執行製作 Production Executive",
     "company": "",
     "location": "臺北市",
     "salary": "面議（經常性薪資達4萬元）",
     "date": "",
-    "url": "https://www.yourator.co/companies/STR-Network/jobs/31098",
+    "url": "https://www.yourator.co/companies/STR-Network/jobs/39101",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "【ADNEX】資深廣告業務 顧問/副理/經理 Consultant / (Associate) Manager (台北)",
+    "title": "【AD】資深人才策略夥伴 Senior People Business Partner(台南）",
     "company": "",
-    "location": "臺北市",
+    "location": "臺南市",
     "salary": "面議（經常性薪資達4萬元）",
     "date": "",
-    "url": "https://www.yourator.co/companies/KdanMobile/jobs/28960",
+    "url": "https://www.yourator.co/companies/KdanMobile/jobs/41161",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "客戶成功經理 Merchant Success Manager（獎金另計）",
+    "title": "【2025數位永續種子】ADNEX廣告優化實習生(台北)",
     "company": "",
     "location": "臺北市",
-    "salary": "NT$ 48,000 - 60,000 (月薪)",
+    "salary": "NT$ 190 - 190 (時薪)",
     "date": "",
-    "url": "https://www.yourator.co/companies/iCHEF/jobs/38353",
+    "url": "https://www.yourator.co/companies/KdanMobile/jobs/30470",
     "page": 1,
     "source": "yourator"
   },
   {
-    "title": "【Fintech】專案經理 Project Manager (金融科技| 非博弈| 海外市場| 國外業務)",
+    "title": "【點點簽】自動化測試軟體工程師 QA Automation Engineer (台南) ",
     "company": "",
-    "location": "臺北市",
+    "location": "臺南市",
     "salary": "面議（經常性薪資達4萬元）",
     "date": "",
-    "url": "https://www.yourator.co/companies/ha-fintech/jobs/41825",
+    "url": "https://www.yourator.co/companies/KdanMobile/jobs/25334",
     "page": 1,
     "source": "yourator"
   }
