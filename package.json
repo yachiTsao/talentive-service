@@ -1,0 +1,19 @@
+{
+  "name": "fju-test",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "dev": "ts-node src/crawler.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/crawler.js"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.11.30"
+  }
+}

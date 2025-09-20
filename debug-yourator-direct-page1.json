@@ -1,0 +1,584 @@
+{
+  "payload": {
+    "hasMore": true,
+    "currentPage": 1,
+    "nextPage": 2,
+    "recommendedJobs": [],
+    "trendingKeywords": [],
+    "jobs": [
+      {
+        "id": 36510,
+        "name": "行銷社群經理(FMCG品類)",
+        "thirdPartyUrl": null,
+        "path": "/companies/prohallmarks/jobs/36510",
+        "tags": [],
+        "follow": false,
+        "salary": "NT$ 37,000 - 47,000 (月薪)",
+        "lastActiveAt": "一天內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 2809,
+        "company": {
+          "path": "/companies/prohallmarks",
+          "brand": "台灣寶赫曼企業股份有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/002/809/default/7bd16051016784518eb262a752df0dbbe97ec1c5.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "prohallmarks"
+        }
+      },
+      {
+        "id": 38144,
+        "name": "產品品牌PM(快銷品品類FMCG)",
+        "thirdPartyUrl": null,
+        "path": "/companies/prohallmarks/jobs/38144",
+        "tags": [],
+        "follow": false,
+        "salary": "NT$ 34,000 - 45,000 (月薪)",
+        "lastActiveAt": "一天內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 2809,
+        "company": {
+          "path": "/companies/prohallmarks",
+          "brand": "台灣寶赫曼企業股份有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/002/809/default/7bd16051016784518eb262a752df0dbbe97ec1c5.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "prohallmarks"
+        }
+      },
+      {
+        "id": 36550,
+        "name": "數位行銷專員/市場行銷/行銷專案(FMCG快速銷售品)遠端",
+        "thirdPartyUrl": null,
+        "path": "/companies/prohallmarks/jobs/36550",
+        "tags": [],
+        "follow": false,
+        "salary": "NT$ 240 - 240 (時薪)",
+        "lastActiveAt": "一天內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 2809,
+        "company": {
+          "path": "/companies/prohallmarks",
+          "brand": "台灣寶赫曼企業股份有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/514/medium/40c5f3991c01243d6eea475e1a9c23babade521b.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/002/809/default/7bd16051016784518eb262a752df0dbbe97ec1c5.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "prohallmarks"
+        }
+      },
+      {
+        "id": 40651,
+        "name": "【點點簽】資深產品經理 Sr.Product Manager(台南)",
+        "thirdPartyUrl": "https://KdanMobile.teamdoor.io/s/NAas5doE",
+        "path": "/companies/KdanMobile/jobs/40651",
+        "tags": [],
+        "follow": false,
+        "salary": "面議（經常性薪資達4萬元）",
+        "lastActiveAt": "一週內更新",
+        "location": "臺南市",
+        "externalSource": "teamdoor",
+        "companyId": 172,
+        "company": {
+          "path": "/companies/KdanMobile",
+          "brand": "KDAN",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/172/default/e0ebab9c7f500426daa8dce83cd7a95b9fd5dce7.png",
+          "badges": [
+            "dei",
+            "aama",
+            "unext",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "KdanMobile"
+        }
+      },
+      {
+        "id": 39101,
+        "name": "執行製作 Production Executive",
+        "thirdPartyUrl": "https://strnetwork.teamdoor.io/s/REjiD52q",
+        "path": "/companies/STR-Network/jobs/39101",
+        "tags": [],
+        "follow": false,
+        "salary": "面議（經常性薪資達4萬元）",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": "teamdoor",
+        "companyId": 1763,
+        "company": {
+          "path": "/companies/STR-Network",
+          "brand": "STR Network 薩泰爾娛樂",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/001/904/medium/642ae337a2584783ea850e85afa6637531180c77.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/001/904/medium/642ae337a2584783ea850e85afa6637531180c77.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/001/763/default/684ac70f038bbc6024abc50d2e8fb282c30de891.png",
+          "badges": [
+            "aama",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "STR-Network"
+        }
+      },
+      {
+        "id": 28960,
+        "name": "【ADNEX】資深廣告業務 顧問/副理/經理 Consultant / (Associate) Manager (台北)",
+        "thirdPartyUrl": "https://KdanMobile.teamdoor.io/s/AaB930Cs",
+        "path": "/companies/KdanMobile/jobs/28960",
+        "tags": [],
+        "follow": false,
+        "salary": "面議（經常性薪資達4萬元）",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": "teamdoor",
+        "companyId": 172,
+        "company": {
+          "path": "/companies/KdanMobile",
+          "brand": "KDAN",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/172/default/e0ebab9c7f500426daa8dce83cd7a95b9fd5dce7.png",
+          "badges": [
+            "dei",
+            "aama",
+            "unext",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "KdanMobile"
+        }
+      },
+      {
+        "id": 39537,
+        "name": "【RD】資深技術專案經理 Senior Technical Project Manager(台南)",
+        "thirdPartyUrl": "https://KdanMobile.teamdoor.io/s/uKqqDLr6",
+        "path": "/companies/KdanMobile/jobs/39537",
+        "tags": [],
+        "follow": false,
+        "salary": "面議（經常性薪資達4萬元）",
+        "lastActiveAt": "一週內更新",
+        "location": "臺南市",
+        "externalSource": "teamdoor",
+        "companyId": 172,
+        "company": {
+          "path": "/companies/KdanMobile",
+          "brand": "KDAN",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/172/default/e0ebab9c7f500426daa8dce83cd7a95b9fd5dce7.png",
+          "badges": [
+            "dei",
+            "aama",
+            "unext",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "KdanMobile"
+        }
+      },
+      {
+        "id": 40996,
+        "name": ".Net 軟體工程師",
+        "thirdPartyUrl": null,
+        "path": "/companies/hwitech/jobs/40996",
+        "tags": [
+          ".Net",
+          "ASP.NET",
+          ".Net Core"
+        ],
+        "follow": false,
+        "salary": "NT$ 50,000 - 80,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 3213,
+        "company": {
+          "path": "/companies/hwitech",
+          "brand": "華威數位財金科技股份有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/669/medium/40d0102d03ee9ddf3fd1fa99e70687721b86a0c8.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/669/medium/40d0102d03ee9ddf3fd1fa99e70687721b86a0c8.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/003/213/default/7f7a8e903c1ee6bee2a115eea28686f92f7e8049.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "hwitech"
+        }
+      },
+      {
+        "id": 41877,
+        "name": "電商產品開發 (採購部) E-commerce Product Executive (Sourcing Team) ｜歡迎新鮮人",
+        "thirdPartyUrl": null,
+        "path": "/companies/SearchingC/jobs/41877",
+        "tags": [
+          "SALES",
+          "business development",
+          "Project Management"
+        ],
+        "follow": false,
+        "salary": "NT$ 36,000 - 45,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 708,
+        "company": {
+          "path": "/companies/SearchingC",
+          "brand": "香港商 Searching C",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/844/medium/356270b23b79896d8db04ab45f9945dd72bdd91d.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/844/medium/356270b23b79896d8db04ab45f9945dd72bdd91d.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/708/default/930bdc5b6d915f025fcbc93c1b49bca817ab78e7.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "SearchingC"
+        }
+      },
+      {
+        "id": 18995,
+        "name": "【AmazingTalker】影音行銷企劃｜Video Marketing Strategist",
+        "thirdPartyUrl": "https://bit.ly/46qDx6v",
+        "path": "/companies/AmazingTalker/jobs/18995",
+        "tags": [
+          "跨國團隊",
+          "新創",
+          "社群行銷",
+          "廣告文案／企劃",
+          "語言教學",
+          "C2C"
+        ],
+        "follow": false,
+        "salary": "NT$ 43,000 - 60,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "新北市",
+        "externalSource": null,
+        "companyId": 112,
+        "company": {
+          "path": "/companies/AmazingTalker",
+          "brand": "AmazingTalker ",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/276/medium/349f52706c52b027e41b5ee227bcf92082fbdd98.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/276/medium/349f52706c52b027e41b5ee227bcf92082fbdd98.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/112/default/37d2a8c9398a07dadf9535ba24b4056b08375418.jpg",
+          "badges": [
+            "aama",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "AmazingTalker"
+        }
+      },
+      {
+        "id": 41823,
+        "name": "【Fintech】帳務主管/組長/經理  (金融科技|非博弈|餐費輔助及週末津貼|完整教育訓練)",
+        "thirdPartyUrl": null,
+        "path": "/companies/ha-fintech/jobs/41823",
+        "tags": [
+          "財務會計",
+          "金融科技",
+          "主辦會計",
+          "財務或會計主管",
+          "帳務處理"
+        ],
+        "follow": false,
+        "salary": "NT$ 55,000 - 80,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 3280,
+        "company": {
+          "path": "/companies/ha-fintech",
+          "brand": "HUA AO_香港商創金科技有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/694/medium/bf010348a111a3ef475a00565f2ca8350aa41a72.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/694/medium/bf010348a111a3ef475a00565f2ca8350aa41a72.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/003/280/default/968def0d52d9fddcebba8ce1004b3830146e83c5.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "ha-fintech"
+        }
+      },
+      {
+        "id": 41931,
+        "name": "後端工程師 (Python) Backend Engineer",
+        "thirdPartyUrl": "https://voicetube.teamdoor.io/s/oEVYKX0p",
+        "path": "/companies/VoiceTube/jobs/41931",
+        "tags": [],
+        "follow": false,
+        "salary": "面議（經常性薪資達4萬元）",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": "teamdoor",
+        "companyId": 100,
+        "company": {
+          "path": "/companies/VoiceTube",
+          "brand": "VoiceTube 看影片學英語",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/129/medium/6e2ebc7d9bd7a7e2756f8fdcb33204fa5af63a44.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/129/medium/6e2ebc7d9bd7a7e2756f8fdcb33204fa5af63a44.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/100/default/ed456f94d6d0316cf36703af392906eeecd87be3.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "VoiceTube"
+        }
+      },
+      {
+        "id": 30632,
+        "name": "電商行銷企劃專員",
+        "thirdPartyUrl": null,
+        "path": "/companies/Fantimate/jobs/30632",
+        "tags": [
+          "電商行銷",
+          "電商平台",
+          "新創電商平台經營",
+          "行銷企畫",
+          "電商平台活動企畫"
+        ],
+        "follow": false,
+        "salary": "NT$ 35,000 - 40,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 2195,
+        "company": {
+          "path": "/companies/Fantimate",
+          "brand": "Fantimate",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/235/medium/8823d2cd00655a6b1f5a5c28a48c595baf4107d9.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/235/medium/8823d2cd00655a6b1f5a5c28a48c595baf4107d9.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/002/195/default/84859be072baa323735046bd45efc83795733613.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "Fantimate"
+        }
+      },
+      {
+        "id": 40792,
+        "name": "軟體產品測試工程師 [07]",
+        "thirdPartyUrl": null,
+        "path": "/companies/intelligrate/jobs/40792",
+        "tags": [
+          "QA Engineer",
+          "QA testing",
+          "自動化測試",
+          "手動測試",
+          "功能測試",
+          "資安檢測"
+        ],
+        "follow": false,
+        "salary": "NT$ 50,000 - 65,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 3222,
+        "company": {
+          "path": "/companies/intelligrate",
+          "brand": "智滙科技 Intelligrate Technology",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/667/medium/aa39c4faccd8bc15c48dcbfa1445767665e87ef6.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/667/medium/aa39c4faccd8bc15c48dcbfa1445767665e87ef6.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/003/222/default/7839acb5ee6d9d3df8359ca2660d9609346b3a88.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "intelligrate"
+        }
+      },
+      {
+        "id": 41551,
+        "name": "Testing & Office Intern",
+        "thirdPartyUrl": "https://jobs.lever.co/piccollage/e14e2b92-f48e-4175-910d-81747798def5?lever-origin=applied&lever-source%5B%5D=Yourator",
+        "path": "/companies/PicCollage/jobs/41551",
+        "tags": [
+          "Internship",
+          "Fluent in English",
+          "Product Testing",
+          "Chinese"
+        ],
+        "follow": false,
+        "salary": "NT$ 225 - 225 (時薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 3,
+        "company": {
+          "path": "/companies/PicCollage",
+          "brand": "PicCollage 拼貼趣",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/014/medium/7ea1e1508562e9041e71427e543cf7db65d95958.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/014/medium/7ea1e1508562e9041e71427e543cf7db65d95958.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/003/default/34b5d2a08ade1d053a9297b91d6f846376611efe.png",
+          "badges": [
+            "aama",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "PicCollage"
+        }
+      },
+      {
+        "id": 30702,
+        "name": "電商平台管理師",
+        "thirdPartyUrl": null,
+        "path": "/companies/Fantimate/jobs/30702",
+        "tags": [
+          "電商營運",
+          "電商行銷",
+          "電商平台",
+          "平台經營",
+          "平台管理",
+          "電商平台活動企畫"
+        ],
+        "follow": false,
+        "salary": "NT$ 35,000 - 40,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 2195,
+        "company": {
+          "path": "/companies/Fantimate",
+          "brand": "Fantimate",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/235/medium/8823d2cd00655a6b1f5a5c28a48c595baf4107d9.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/235/medium/8823d2cd00655a6b1f5a5c28a48c595baf4107d9.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/002/195/default/84859be072baa323735046bd45efc83795733613.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "Fantimate"
+        }
+      },
+      {
+        "id": 38934,
+        "name": "【2025數位永續種子】財務會計實習生(台南) ",
+        "thirdPartyUrl": "https://KdanMobile.teamdoor.io/s/ZGCorLqf",
+        "path": "/companies/KdanMobile/jobs/38934",
+        "tags": [],
+        "follow": false,
+        "salary": "NT$ 190 - 190 (時薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺南市",
+        "externalSource": "teamdoor",
+        "companyId": 172,
+        "company": {
+          "path": "/companies/KdanMobile",
+          "brand": "KDAN",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/172/default/e0ebab9c7f500426daa8dce83cd7a95b9fd5dce7.png",
+          "badges": [
+            "dei",
+            "aama",
+            "unext",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "KdanMobile"
+        }
+      },
+      {
+        "id": 40995,
+        "name": "SRE 維運工程師",
+        "thirdPartyUrl": null,
+        "path": "/companies/hwitech/jobs/40995",
+        "tags": [
+          "SRE",
+          "MIS",
+          "MIS程式設計師",
+          "DevOps / SRE"
+        ],
+        "follow": false,
+        "salary": "NT$ 50,000 - 65,000 (月薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 3213,
+        "company": {
+          "path": "/companies/hwitech",
+          "brand": "華威數位財金科技股份有限公司",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/002/669/medium/40d0102d03ee9ddf3fd1fa99e70687721b86a0c8.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/002/669/medium/40d0102d03ee9ddf3fd1fa99e70687721b86a0c8.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/003/213/default/7f7a8e903c1ee6bee2a115eea28686f92f7e8049.png",
+          "badges": [
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "hwitech"
+        }
+      },
+      {
+        "id": 39412,
+        "name": "【2025數位永續種子】客服實習生 Customer Success Intern (台南)",
+        "thirdPartyUrl": "https://KdanMobile.teamdoor.io/s/8gPHotmg",
+        "path": "/companies/KdanMobile/jobs/39412",
+        "tags": [],
+        "follow": false,
+        "salary": "NT$ 190 - 190 (時薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺南市",
+        "externalSource": "teamdoor",
+        "companyId": 172,
+        "company": {
+          "path": "/companies/KdanMobile",
+          "brand": "KDAN",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/216/medium/9fe0659336ae150051f7d3b700ebdeaba74148b2.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/172/default/e0ebab9c7f500426daa8dce83cd7a95b9fd5dce7.png",
+          "badges": [
+            "dei",
+            "aama",
+            "unext",
+            "verified"
+          ],
+          "canThirdPartyUrl": true,
+          "enName": "KdanMobile"
+        }
+      },
+      {
+        "id": 40890,
+        "name": "【軟體工程師 - 後端】Software Engineer - Backend",
+        "thirdPartyUrl": null,
+        "path": "/companies/FunNow/jobs/40890",
+        "tags": [
+          "Software Engineer",
+          "Backend Engineer"
+        ],
+        "follow": false,
+        "salary": "NT$ 900,000 - 1,100,000 (年薪)",
+        "lastActiveAt": "一週內更新",
+        "location": "臺北市",
+        "externalSource": null,
+        "companyId": 87,
+        "company": {
+          "path": "/companies/FunNow",
+          "brand": "FUNNOW Group",
+          "banner": "https://s3cdn.yourator.co/banners/banners/000/000/117/medium/cae8f0b40c8fbedfaf7c191fd930be99ef3180db.png",
+          "bannerUrl": "https://s3cdn.yourator.co/banners/banners/000/000/117/medium/cae8f0b40c8fbedfaf7c191fd930be99ef3180db.png",
+          "logo": "https://s3cdn.yourator.co/companies/logos/000/000/087/default/1a68cd31e07325929b71daa57a2347380c67ed15.png",
+          "badges": [
+            "aama",
+            "verified"
+          ],
+          "canThirdPartyUrl": false,
+          "enName": "FunNow"
+        }
+      }
+    ]
+  }
+}
