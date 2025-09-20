@@ -2,7 +2,7 @@
 
 # Talentive (Job Crawler)
 
-以 TypeScript + Playwright 實作的「多平台職缺抓取」小型範例，便於快速批次蒐集 104、Yourator 等站點職缺清單並輸出為 JSON。專案聚焦於：簡潔 CLI、可擴充 Provider 介面、低侵入抓取策略與基礎去重邏輯。
+以 TypeScript + Playwright 實作的「抓取多平台職缺」小型範例，便於快速批次蒐集 104、Yourator 等站點職缺清單並輸出為 JSON。專案聚焦於：簡潔 CLI、可擴充 Provider 介面、低侵入抓取策略與基礎去重邏輯。
 
 ## ✨ 功能特色
 - 多來源：目前支援 `104`、`yourator` 兩個平台，可透過 `--providers` 指定 (逗號分隔)。
@@ -25,7 +25,7 @@ npm install
 ## ▶️ 快速開始
 最常見的抓取：
 ```bash
-npm run dev -- --keyword=前端工程師 --pages=2 --providers=yourator,104 --delay=700 --output=jobs.json
+npm run dev -- --keyword=資料工程師 --pages=2 --providers=yourator,104 --delay=700 --output=jobs.json
 ```
 顯示詳細除錯並輸出 HTML：
 ```bash
@@ -35,7 +35,7 @@ npm run dev -- --keyword=資料工程師 --pages=1 --providers=yourator --debug
 ## 🔧 CLI 參數說明
 | 參數 | 型態 | 預設 | 說明 |
 |------|------|------|------|
-| `--keyword` | string | `前端工程師` | 搜尋關鍵字 |
+| `--keyword` | string | `資料工程師` | 搜尋關鍵字 |
 | `--pages` | number | `1` | 要抓取的頁數 (各 provider 會自行停止在實際可用最大頁) |
 | `--providers` | string | `104,yourator` | 逗號分隔來源清單 |
 | `--delay` | number(ms) | `700` | 各頁之間延遲，避免過快觸發風控 |
@@ -46,7 +46,6 @@ npm run dev -- --keyword=資料工程師 --pages=1 --providers=yourator --debug
 ```
 src/
   crawler.ts              # 主 CLI：載入選擇的 providers，整合去重並輸出
-  yourator-crawler.ts     # 單獨實驗 / 範例版 Yourator 爬取腳本
   providers/
     types.ts              # 型別定義：BaseJob / Provider 介面
     provider104.ts        # 104 實作：呼叫官方搜尋 API
@@ -80,7 +79,7 @@ interface BaseJob {
 ```jsonc
 [
   {
-    "title": "前端工程師",
+    "title": "資料工程師",
     "company": "範例公司",
     "location": "台北市",
     "salary": "面議",
