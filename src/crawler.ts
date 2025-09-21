@@ -3,6 +3,7 @@ import fs from 'fs';
 import { BaseJob, ProviderOptions } from './providers/types';
 import { ProviderYourator } from './providers/yourator';
 import { Provider104 } from './providers/provider104';
+import { Provider1111 } from './providers/provider1111';
 
 interface CliOptions extends ProviderOptions { providers: string[]; output: string; }
 
@@ -17,7 +18,7 @@ function parseArgs(): CliOptions {
   const keyword = get('keyword', '前端工程師')!;
   const pages = Number(get('pages', '1'));
   const delay = Number(get('delay', '700'));
-  const providers = get('providers', '104,yourator')!.split(',').map(s => s.trim()).filter(Boolean);
+  const providers = get('providers', '104,yourator,1111')!.split(',').map(s => s.trim()).filter(Boolean);
   const debug = has('debug');
   const output = get('output', 'jobs.json')!;
   return {
@@ -40,7 +41,8 @@ function dedupeByUrl(jobs: BaseJob[]): BaseJob[] {
 
 const registry = {
   'yourator': ProviderYourator,
-  '104': Provider104
+  '104': Provider104,
+  '1111': Provider1111
 };
 
 async function run(): Promise<void> {

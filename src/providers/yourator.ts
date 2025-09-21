@@ -44,7 +44,6 @@ export const ProviderYourator: JobProvider = {
         await page.waitForURL(/\/jobs/, { timeout: 15_000 }).catch(()=>{});
       } else {
         if (debug) console.log('[DEBUG][yourator] 未找到搜尋框，直接導向搜尋結果頁');
-        console.log('keywords',keyword)
         await page.goto(`https://www.yourator.co/jobs?sort=most_related&term[]=${keyword}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
       }
     } catch (e) {

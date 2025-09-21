@@ -2,10 +2,10 @@
 
 # Talentive (Job Crawler)
 
-以 TypeScript + Playwright 實作的「抓取多平台職缺」小型範例，便於快速批次蒐集 104、Yourator 等站點職缺清單並輸出為 JSON。專案聚焦於：簡潔 CLI、可擴充 Provider 介面、低侵入抓取策略與基礎去重邏輯。
+以 TypeScript + Playwright 實作的「抓取多平台職缺」小型範例，便於快速批次蒐集 104、Yourator、1111 等站點職缺清單並輸出為 JSON。專案聚焦於：簡潔 CLI、可擴充 Provider 介面、低侵入抓取策略與基礎去重邏輯。
 
 ## ✨ 功能特色
-- 多來源：目前支援 `104`、`yourator` 兩個平台，可透過 `--providers` 指定 (逗號分隔)。
+- 多來源：目前支援 `104`、`yourator`、`1111` 三個平台，可透過 `--providers` 指定 (逗號分隔)。
 - 非侵入式 Yourator 抓取：模擬使用者瀏覽與滾動，不直呼內部 API，降低被偵測風險。
 - 104 使用官方公開搜尋 API，加快回應速度。
 - 統一輸出格式 (`BaseJob`) 並以 URL 去重。
@@ -26,7 +26,7 @@ npm install
 ## ▶️ 快速開始
 最常見的抓取：
 ```bash
-npm run dev -- --keyword=資料工程師 --pages=2 --providers=yourator,104 --delay=700 --output=jobs.json
+npm run dev -- --keyword=資料工程師 --pages=2 --providers=yourator,104,1111 --delay=700 --output=jobs.json
 ```
 顯示詳細除錯並輸出 HTML：
 ```bash
@@ -38,7 +38,7 @@ npm run dev -- --keyword=資料工程師 --pages=1 --providers=yourator --debug
 |------|------|------|------|
 | `--keyword` | string | `資料工程師` | 搜尋關鍵字 |
 | `--pages` | number | `1` | 要抓取的頁數 (各 provider 會自行停止在實際可用最大頁) |
-| `--providers` | string | `104,yourator` | 逗號分隔來源清單 |
+| `--providers` | string | `104,yourator` | 逗號分隔來源清單 (可用: `104,yourator,1111`) |
 | `--delay` | number(ms) | `700` | 各頁之間延遲，避免過快觸發風控 |
 | `--output` | string | `jobs.json` | 輸出檔案路徑 (JSON) |
 | `--debug` | flag | (false) | 額外輸出 debug HTML（如空頁或錯誤頁） |
@@ -51,6 +51,7 @@ src/
     types.ts              # 型別定義：BaseJob / Provider 介面
     provider104.ts        # 104 實作：呼叫官方搜尋 API
     yourator.ts           # Yourator 實作：模擬瀏覽 + 滾動載入 + DOM 擷取
+    provider1111.ts       # 1111 實作：載入搜尋結果頁 + DOM 擷取
 ```
 
 ## 🧠 抓取流程概述
@@ -109,6 +110,13 @@ interface BaseJob {
 4. 於 `crawler.ts` 的 `registry` 加入：`'foo': ProviderFoo`
 5. 執行：`npm run dev -- --providers=foo --keyword=...`
 
+### 現有 providers 策略摘要
+| 名稱 | 抓取方式 | 備註 |
+|------|----------|------|
+| 104 | 官方搜尋 JSON API | 速度快，可得日期、薪資等欄位 |
+| yourator | 瀏覽器 DOM + 滾動 | 避免直接打私有 API，使用 anchor 解析 |
+| 1111 | 瀏覽器 DOM | 解析 `.job-card`，抽取標題/公司/地點/薪資/日期 |
+
 建議：
 - 盡量使用站點提供的公開 API；若無，採 Page DOM 擷取並保持節奏。
 - 避免同時大量開分頁；目前策略為一 provider 一個 page（較保守）。
@@ -120,6 +128,18 @@ interface BaseJob {
 3. 監測 `#normal-jobs`、`#scroll-monitored-jobs` 中的 anchor。
 4. 模擬滾動以觸發 lazy load，直到職缺數不再增加或達內部迴圈上限。
 5. 文字解析策略以關鍵字 heuristics 抽取 title/company/location/salary。
+
+## 🔍 1111 抓取策略 (新增)
+1. 直接導向 `https://www.1111.com.tw/search/job?ks=<關鍵字>&page=N`。
+2. 等待 `.job-card` 元素載入，向下滾動數次確保懶加載完成。
+3. 解析：
+  - 連結/標題：`a[href^="/job/"] h2`
+  - 公司：`a[href^="/corp/"] h2`
+  - 地點：第一個 `.job-card-condition__text`
+  - 薪資：條件文字中包含 `月薪/年薪/元/面議`
+  - 日期：`job-summary` 或行動版第一個 `<p>` 的 `MM/DD`
+4. 日期為原始字串 (不含年份)；可後續再行補全。
+5. 無額外 API 呼叫，降低被偵測風險。
 
 ## 🛠️ NPM Scripts
 | 指令 | 說明 |
