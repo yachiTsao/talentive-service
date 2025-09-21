@@ -15,6 +15,7 @@
 ## 📦 環境需求
 - Node.js 18+ (建議 LTS)
 - 會自動於 `postinstall` 安裝 Playwright Chromium 瀏覽器
+- `npx playwright install-deps` 安裝個瀏覽器所需要的系統層原生依賴套件
 
 ## 🚀 安裝
 ```bash

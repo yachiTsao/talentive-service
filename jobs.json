@@ -1,5 +1,15 @@
 [
   {
+    "title": "系統開發工程師-協策處",
+    "company": "財團法人商業發展研究院",
+    "location": "台北市大安區",
+    "salary": "待遇面議",
+    "date": "20250918",
+    "url": "https://www.104.com.tw/job/14439879",
+    "page": 1,
+    "source": "104"
+  },
+  {
     "title": "Python軟體工程師",
     "company": "微程式資訊股份有限公司",
     "location": "台中市西屯區",
@@ -10,12 +20,12 @@
     "source": "104"
   },
   {
-    "title": "【全端開發工程師(後台系統)】Full-Stack Developer(Backend Systems)",
-    "company": "智鈦星平台服務有限公司",
-    "location": "台北市信義區",
-    "salary": "待遇面議",
-    "date": "20250919",
-    "url": "https://www.104.com.tw/job/14691330",
+    "title": "網頁前端工程師",
+    "company": "精銳數位科技有限公司",
+    "location": "台中市西屯區",
+    "salary": "月薪35,000~100,000元",
+    "date": "20250918",
+    "url": "https://www.104.com.tw/job/14841662",
     "page": 1,
     "source": "104"
   },
@@ -26,16 +36,6 @@
     "salary": "待遇面議",
     "date": "20250903",
     "url": "https://www.104.com.tw/job/13536822",
-    "page": 1,
-    "source": "104"
-  },
-  {
-    "title": "前端工程師 Frontend Engineer",
-    "company": "飛起來行銷股份有限公司",
-    "location": "台南市中西區",
-    "salary": "月薪34,000元以上",
-    "date": "20250919",
-    "url": "https://www.104.com.tw/job/14772890",
     "page": 1,
     "source": "104"
   },
@@ -60,6 +60,16 @@
     "source": "104"
   },
   {
+    "title": "前端工程師 Frontend Engineer",
+    "company": "飛起來行銷股份有限公司",
+    "location": "台南市中西區",
+    "salary": "月薪34,000元以上",
+    "date": "20250919",
+    "url": "https://www.104.com.tw/job/14772890",
+    "page": 1,
+    "source": "104"
+  },
+  {
     "title": "前端工程師",
     "company": "聖勝科技有限公司",
     "location": "台北市內湖區",
@@ -76,16 +86,6 @@
     "salary": "年薪900,000~1,200,000元",
     "date": "20250917",
     "url": "https://www.104.com.tw/job/14780616",
-    "page": 1,
-    "source": "104"
-  },
-  {
-    "title": "前端工程師",
-    "company": "加林軟體科技有限公司",
-    "location": "台北市信義區",
-    "salary": "月薪30,000~70,000元",
-    "date": "20250819",
-    "url": "https://www.104.com.tw/job/13799855",
     "page": 1,
     "source": "104"
   },
@@ -111,11 +111,11 @@
   },
   {
     "title": "前端工程師",
-    "company": "雲之萃顧問股份有限公司",
-    "location": "台北市大安區",
-    "salary": "月薪35,000~55,000元",
-    "date": "20250920",
-    "url": "https://www.104.com.tw/job/13845991",
+    "company": "加林軟體科技有限公司",
+    "location": "台北市信義區",
+    "salary": "月薪30,000~70,000元",
+    "date": "20250819",
+    "url": "https://www.104.com.tw/job/13799855",
     "page": 1,
     "source": "104"
   },
@@ -130,12 +130,32 @@
     "source": "104"
   },
   {
+    "title": "前端工程師",
+    "company": "雷技資訊科技有限公司",
+    "location": "台北市南港區",
+    "salary": "月薪45,000~60,000元",
+    "date": "20250911",
+    "url": "https://www.104.com.tw/job/6274164",
+    "page": 1,
+    "source": "104"
+  },
+  {
     "title": "前端工程師(Vue.js)",
     "company": "大放娛樂有限公司",
     "location": "台北市信義區",
     "salary": "待遇面議",
     "date": "20250228",
     "url": "https://www.104.com.tw/job/14483705",
+    "page": 1,
+    "source": "104"
+  },
+  {
+    "title": "Cloud 前端工程師 Frontend Engineer",
+    "company": "普羅通信股份有限公司",
+    "location": "新竹縣湖口鄉",
+    "salary": "待遇面議",
+    "date": "20250727",
+    "url": "https://www.104.com.tw/job/13661344",
     "page": 1,
     "source": "104"
   },
@@ -180,42 +200,22 @@
     "source": "104"
   },
   {
-    "title": "前端工程師",
-    "company": "重高科技股份有限公司",
-    "location": "台北市大安區",
+    "title": "Vue前端工程師",
+    "company": "昇智科技有限公司",
+    "location": "台北市松山區",
     "salary": "待遇面議",
-    "date": "20250916",
-    "url": "https://www.104.com.tw/job/13903230",
+    "date": "20250806",
+    "url": "https://www.104.com.tw/job/14747155",
     "page": 1,
     "source": "104"
   },
   {
-    "title": "【企劃部-數位行銷】前端工程師 Frontend Engineer",
-    "company": "甲山林集團_愛山林建設開發股份有限公司",
-    "location": "台北市中山區",
-    "salary": "待遇面議",
-    "date": "20250907",
-    "url": "https://www.104.com.tw/job/14540087",
-    "page": 1,
-    "source": "104"
-  },
-  {
-    "title": "前端工程師",
-    "company": "塞席爾商瑞迪寰宇股份有限公司台灣分公司",
-    "location": "台中市西屯區",
-    "salary": "月薪45,000~70,000元",
-    "date": "20250911",
-    "url": "https://www.104.com.tw/job/14038468",
-    "page": 1,
-    "source": "104"
-  },
-  {
-    "title": "應用系統前端工程師 丨Frontend Engineer",
-    "company": "永聯物流開發股份有限公司",
-    "location": "台北市內湖區",
-    "salary": "待遇面議",
-    "date": "20250916",
-    "url": "https://www.104.com.tw/job/14419402",
+    "title": "IOS/Android APP 前端工程師（Flutter／跨平台開發）",
+    "company": "家齊樂有限公司",
+    "location": "新北市五股區",
+    "salary": "月薪40,000~60,000元",
+    "date": "20250919",
+    "url": "https://www.104.com.tw/job/14842411",
     "page": 1,
     "source": "104"
   },
@@ -310,22 +310,22 @@
     "source": "yourator"
   },
   {
-    "title": "前端工程師/Front-end Developer",
-    "company": "JGB SMART PROPERTY CO., LTD.",
-    "location": "臺北市",
-    "salary": "NT$ 50,000 - 100,000 (月薪)",
-    "date": "",
-    "url": "https://www.yourator.co/companies/jgbsmart/jobs/5681",
-    "page": 1,
-    "source": "yourator"
-  },
-  {
     "title": "Front-end Developer 前端工程師",
     "company": "麻布數據科技股份有限公司",
     "location": "臺北市",
     "salary": "NT$ 600,000 - 800,000 (年薪)",
     "date": "",
     "url": "https://www.yourator.co/companies/invos/jobs/41211",
+    "page": 1,
+    "source": "yourator"
+  },
+  {
+    "title": "前端工程師/Front-end Developer",
+    "company": "JGB SMART PROPERTY CO., LTD.",
+    "location": "臺北市",
+    "salary": "NT$ 50,000 - 100,000 (月薪)",
+    "date": "",
+    "url": "https://www.yourator.co/companies/jgbsmart/jobs/5681",
     "page": 1,
     "source": "yourator"
   },
