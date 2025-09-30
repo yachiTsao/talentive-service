@@ -23,6 +23,7 @@ RUN npm run build
 FROM mcr.microsoft.com/playwright:v1.55.0-jammy AS runtime
 ENV NODE_ENV=production
 WORKDIR /app
+RUN mkdir -p /app/data
 
 # 只帶入 production node_modules 與編譯成果
 COPY --from=base /app/node_modules ./node_modules
