@@ -46,4 +46,5 @@ ENV KEYWORD="前端工程師" \
     DEBUG=false
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD []
+EXPOSE 3000
+CMD ["node","dist/server.js"]
