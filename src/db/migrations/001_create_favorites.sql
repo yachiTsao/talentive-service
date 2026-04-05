@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS favorites (
+  id INTEGER PRIMARY KEY
+);
