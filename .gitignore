@@ -18,6 +18,9 @@ build/
 .env.local
 .env.*.local
 
+# SQLite database files (data/.gitkeep is committed, but not the actual DB)
+data/*.db
+
 # Editor directories and files
 .vscode/
 .idea/
