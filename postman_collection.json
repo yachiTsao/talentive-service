@@ -1,0 +1,188 @@
+{
+  "info": {
+    "name": "Talentive Service API",
+    "description": "職缺爬蟲服務 API — 支援 104、Yourator、1111 平台並行爬取",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "talentive-service-api-v1"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "服務 base URL（本地開發預設）"
+    }
+  ],
+  "item": [
+    {
+      "name": "POST /crawl — 觸發爬蟲",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/crawl",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"keyword\": \"前端工程師\",\n  \"pages\": 1,\n  \"providers\": [\"104\", \"yourator\", \"1111\"],\n  \"delay\": 700,\n  \"debug\": false,\n  \"output\": \"\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "description": "啟動多平台並行爬蟲，回傳本次爬取的所有職缺。\n\n- `keyword`：搜尋關鍵字（預設 `\"前端工程師\"`）\n- `pages`：各 provider 抓取頁數（預設 `1`）\n- `providers`：指定平台清單，支援陣列或逗號分隔字串（預設全部三平台）\n- `delay`：頁面間延遲毫秒（預設 `700`）\n- `output`：輸出檔路徑，空字串代表不寫檔（預設 `/app/data/jobs.json`）\n\n⚠️ 若爬蟲正在執行中，回傳 **409**。"
+      },
+      "response": [
+        {
+          "name": "200 成功",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": true,\n  \"durationMs\": 8432,\n  \"count\": 2,\n  \"data\": [\n    {\n      \"id\": \"a3f9c021\",\n      \"title\": \"前端工程師\",\n      \"company\": \"範例公司\",\n      \"location\": \"台北市\",\n      \"salary\": \"面議\",\n      \"date\": \"2026/04/01\",\n      \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n      \"page\": 1,\n      \"source\": \"104\"\n    },\n    {\n      \"id\": \"7d2e8b14\",\n      \"title\": \"Frontend Engineer\",\n      \"company\": \"另一家公司\",\n      \"location\": \"新北市\",\n      \"salary\": \"60,000–90,000\",\n      \"date\": \"\",\n      \"url\": \"https://www.yourator.co/companies/xxx/jobs/yyy\",\n      \"page\": 1,\n      \"source\": \"yourator\"\n    }\n  ]\n}"
+        },
+        {
+          "name": "409 爬蟲執行中",
+          "status": "Conflict",
+          "code": 409,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": false,\n  \"message\": \"Crawler 正在執行中\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /last — 取得上次爬取結果",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/last",
+        "description": "讀取磁碟上最新一次的爬取結果（`jobs.json`）。\n若舊版資料缺少 `id` 欄位，伺服器即時補齊後回傳，**不改寫磁碟**。"
+      },
+      "response": [
+        {
+          "name": "200 成功",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "[\n  {\n    \"id\": \"a3f9c021\",\n    \"title\": \"前端工程師\",\n    \"company\": \"範例公司\",\n    \"location\": \"台北市\",\n    \"salary\": \"面議\",\n    \"date\": \"2026/04/01\",\n    \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n    \"page\": 1,\n    \"source\": \"104\"\n  }\n]"
+        },
+        {
+          "name": "404 尚無資料",
+          "status": "Not Found",
+          "code": 404,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": false,\n  \"message\": \"檔案不存在\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /health — 健康狀態",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health",
+        "description": "確認服務是否正常運作，以及上次爬取時間與筆數。"
+      },
+      "response": [
+        {
+          "name": "200 正常",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": true,\n  \"running\": false,\n  \"last\": {\n    \"at\": \"2026-04-06T12:00:00.000Z\",\n    \"count\": 42\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /docs/openapi.json — OpenAPI Spec",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/docs/openapi.json",
+        "description": "取得 OpenAPI 3.0 規格 JSON，可直接匯入 Postman 或其他 API 工具。"
+      }
+    },
+    {
+      "name": "Favorites API",
+      "item": [
+        {
+          "name": "POST /favorites/:id — 新增職缺至收藏",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/favorites/{{jobId}}",
+            "description": "將指定 `id` 的職缺加入收藏清單。Server 自行從 `jobs.json` 查找完整資料，前端只需帶路徑參數。\n\n**前置條件**：先執行 `GET /last` 取得有效的 `id`，存入 Collection Variable `jobId`。\n\n| 狀態碼 | 情境 |\n|--------|------|\n| 201 | 新增成功 |\n| 400 | id 非 8 碼十六進位 |\n| 404 | id 不在 jobs.json 中 |\n| 409 | 已在收藏清單中 |"
+          },
+          "response": [
+            {
+              "name": "201 新增成功",
+              "status": "Created",
+              "code": 201,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": true,\n  \"data\": {\n    \"id\": \"a3f9c021\",\n    \"title\": \"前端工程師\",\n    \"company\": \"範例公司\",\n    \"location\": \"台北市\",\n    \"salary\": \"60,000–90,000\",\n    \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n    \"source\": \"104\",\n    \"savedAt\": \"2026-04-06T10:00:00.000Z\"\n  }\n}"
+            },
+            {
+              "name": "400 id 格式不合法",
+              "status": "Bad Request",
+              "code": 400,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": false,\n  \"error\": \"id 格式不合法，須為 8 碼十六進位字串（[0-9a-f]{8}）\"\n}"
+            },
+            {
+              "name": "404 職缺不存在",
+              "status": "Not Found",
+              "code": 404,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": false,\n  \"error\": \"職缺 id 不存在於最近一次爬取結果\"\n}"
+            },
+            {
+              "name": "409 已在收藏清單中",
+              "status": "Conflict",
+              "code": 409,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": false,\n  \"error\": \"職缺已在收藏清單中\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GET /favorites — 取得依平台分群的收藏清單",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/favorites",
+            "description": "列出所有已收藏的職缺，以來源平台（`source`）為鍵分群，群內依 `savedAt` 降冪排序（最新收藏在前）。\n\n收藏清單為空時回傳 `{ \"ok\": true, \"data\": {} }`。"
+          },
+          "response": [
+            {
+              "name": "200 成功（含資料）",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": true,\n  \"data\": {\n    \"104\": [\n      {\n        \"id\": \"a3f9c021\",\n        \"title\": \"前端工程師\",\n        \"company\": \"範例公司\",\n        \"location\": \"台北市\",\n        \"salary\": \"60,000–90,000\",\n        \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n        \"source\": \"104\",\n        \"savedAt\": \"2026-04-06T10:00:00.000Z\"\n      }\n    ],\n    \"yourator\": [\n      {\n        \"id\": \"b1c23d45\",\n        \"title\": \"React 工程師\",\n        \"company\": \"新創公司\",\n        \"location\": \"台北市\",\n        \"salary\": \"\",\n        \"url\": \"https://www.yourator.co/companies/foo/jobs/bar\",\n        \"source\": \"yourator\",\n        \"savedAt\": \"2026-04-06T09:00:00.000Z\"\n      }\n    ]\n  }\n}"
+            },
+            {
+              "name": "200 成功（清單為空）",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": true,\n  \"data\": {}\n}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /favorites/:id — 移除收藏（冪等）",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/favorites/{{jobId}}",
+            "description": "從收藏清單移除指定 `id` 的職缺。**冪等行為**：無論職缺是否在清單中，一律回傳 HTTP 200。\n\n| 狀態碼 | 情境 |\n|--------|------|\n| 200 | 移除成功（或原本不存在）|\n| 400 | id 非 8 碼十六進位 |"
+          },
+          "response": [
+            {
+              "name": "200 移除成功",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": true\n}"
+            },
+            {
+              "name": "400 id 格式不合法",
+              "status": "Bad Request",
+              "code": 400,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"ok\": false,\n  \"error\": \"id 格式不合法，須為 8 碼十六進位字串（[0-9a-f]{8}）\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

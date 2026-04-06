@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import { BaseJob, JobProvider, ProviderOptions } from './types';
+import { JobData, JobProvider, ProviderOptions } from './types';
 
 // 1111 人力銀行 Provider: 以瀏覽器載入搜尋結果頁，解析 DOM (不呼叫內部 API)
 // URL 範例: https://www.1111.com.tw/search/job?ks=關鍵字&page=1
@@ -13,10 +13,10 @@ import { BaseJob, JobProvider, ProviderOptions } from './types';
 //  - 日期: 卡片內第一個日期字串 (格式 mm / dd) 於手機版區塊 或 job-summary 內
 export const Provider1111: JobProvider = {
   name: '1111',
-  async fetch(page: Page, options: ProviderOptions): Promise<BaseJob[]> {
+  async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
     const { keyword, pages, delay, debug } = options;
     const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
-    const results: BaseJob[] = [];
+    const results: JobData[] = [];
 
     async function dump(tag: string) {
       if (!debug) return;
@@ -41,8 +41,8 @@ export const Provider1111: JobProvider = {
           await page.waitForTimeout(700);
         }
 
-        const pageJobs: BaseJob[] = await page.$$eval('.job-card', (cards) => {
-          const jobs: BaseJob[] = [];
+        const pageJobs: JobData[] = await page.$$eval('.job-card', (cards) => {
+          const jobs: JobData[] = [];
           for (const card of cards) {
             try {
               const linkA = card.querySelector('a[href^="/job/"]') as HTMLAnchorElement | null;

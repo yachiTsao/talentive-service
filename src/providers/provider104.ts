@@ -1,12 +1,12 @@
 import { Page } from 'playwright';
-import { BaseJob, JobProvider, ProviderOptions } from './types';
+import { JobData, JobProvider, ProviderOptions } from './types';
 
 // 104 Provider：直接呼叫官方搜尋 API
 export const Provider104: JobProvider = {
   name: '104',
-  async fetch(page: Page, options: ProviderOptions): Promise<BaseJob[]> {
+  async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
     const { keyword, pages, delay, debug } = options;
-    const results: BaseJob[] = [];
+    const results: JobData[] = [];
     const encoded = encodeURIComponent(keyword);
     const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
     let totalPageLimit: number | null = null;
@@ -36,7 +36,7 @@ export const Provider104: JobProvider = {
           if (debug) console.log(`[DEBUG][104] 第 ${p} 頁空，停止`);
           break;
         }
-        const pageJobs: BaseJob[] = list.map(item => ({
+        const pageJobs: JobData[] = list.map(item => ({
           title: item.jobName || '',
             company: item.custName || '',
             location: item.jobAddrNoDesc || '',

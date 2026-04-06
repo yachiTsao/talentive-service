@@ -1,7 +1,8 @@
 import { chromium, Browser, Page } from "playwright";
 import fs from "fs";
 import path from "path";
-import { BaseJob, ProviderOptions } from "./providers/types";
+import { BaseJob, JobData, ProviderOptions } from "./providers/types";
+import { generateId } from "./utils/id";
 import { ProviderYourator } from "./providers/yourator";
 import { Provider104 } from "./providers/provider104";
 import { Provider1111 } from "./providers/provider1111";
@@ -76,10 +77,52 @@ function mergeOptions(partial?: Partial<CrawlerOptions>): CrawlerOptions {
   };
 }
 
-function dedupeByUrl(jobs: BaseJob[]): BaseJob[] {
-  const map = new Map<string, BaseJob>();
+function dedupeByUrl(jobs: JobData[]): JobData[] {
+  const map = new Map<string, JobData>();
   for (const j of jobs) if (!map.has(j.url)) map.set(j.url, j);
   return [...map.values()];
+}
+
+// id を付与し碰撞フィルタリング（FR-003）
+export function assignIds(jobs: JobData[]): BaseJob[] {
+  const seenIds = new Map<string, string>(); // id → url
+  const result: BaseJob[] = [];
+  for (const job of jobs) {
+    const id = generateId(job.url);
+    if (seenIds.has(id)) {
+      console.warn(
+        `[ID COLLISION] id=${id} url1=${seenIds.get(id)} url2=${job.url} 捨棄後者`
+      );
+      continue;
+    }
+    seenIds.set(id, job.url);
+    result.push({ ...job, id });
+  }
+  return result;
+}
+
+// 每個 provider 的逾時包裝（FR-008）
+export function withTimeout<T>(
+  promise: Promise<T>,
+  ms: number,
+  name: string
+): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(
+      () => reject(new Error(`[${name}] 逾時 (${ms}ms)`)),
+      ms
+    );
+    promise.then(
+      (v) => {
+        clearTimeout(timer);
+        resolve(v);
+      },
+      (e) => {
+        clearTimeout(timer);
+        reject(e);
+      }
+    );
+  });
 }
 
 function ensureDirForFile(filePath: string) {
@@ -89,7 +132,7 @@ function ensureDirForFile(filePath: string) {
 
 async function scrapeOnce(opts: CrawlerOptions): Promise<BaseJob[]> {
   let browser: Browser | null = null;
-  const all: BaseJob[] = [];
+  const all: JobData[] = [];
   try {
     browser = await chromium.launch({
       headless: true,
@@ -99,26 +142,56 @@ async function scrapeOnce(opts: CrawlerOptions): Promise<BaseJob[]> {
         "--disable-dev-shm-usage",
       ],
     });
-    for (const name of opts.providers) {
+
+    // 各 provider 並行執行（FR-004），每個 provider 使用獨立 Page
+    const providerTasks = opts.providers.map(async (name) => {
       const provider = (registry as any)[name];
+      const started = Date.now();
       if (!provider) {
         console.warn(`[WARN] 未知 provider: ${name} (跳過)`);
-        continue;
+        return [] as JobData[];
       }
       console.log(`\n[PROVIDER] 開始 ${provider.name}`);
-      const page: Page = await browser.newPage();
+      const page: Page = await browser!.newPage();
       await page.setExtraHTTPHeaders({ "accept-language": "zh-TW,zh;q=0.9" });
-      const jobs = await provider.fetch(page, opts);
-      console.log(`[PROVIDER] ${provider.name} 回傳 ${jobs.length} 筆`);
-      all.push(...jobs);
-      await page.close();
+      try {
+        const jobs: JobData[] = await withTimeout(
+          provider.fetch(page, opts),
+          120_000,
+          name
+        );
+        console.log(`[PROVIDER] ${provider.name} 回傳 ${jobs.length} 筆 (${Date.now() - started}ms)`);
+        return jobs;
+      } finally {
+        await page.close().catch(() => {});
+      }
+    });
+
+    const startTimes = opts.providers.map(() => Date.now());
+    const results = await Promise.allSettled(providerTasks);
+
+    // 彙整結果，記錄失敗 provider（FR-005）
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const name = opts.providers[i];
+      const elapsedMs = Date.now() - startTimes[i];
+      if (r.status === "fulfilled") {
+        all.push(...r.value);
+      } else {
+        console.warn(
+          `[PROVIDER ERROR] name=${name} error=${r.reason?.message ?? r.reason} elapsedMs=${elapsedMs}`
+        );
+      }
     }
   } finally {
     if (browser) await browser.close();
   }
   const deduped = dedupeByUrl(all);
-  console.log(`\n[SUMMARY] 原始=${all.length} 去重後=${deduped.length}`);
-  return deduped;
+  const withIds = assignIds(deduped);
+  console.log(
+    `\n[SUMMARY] 原始=${all.length} 去重後=${deduped.length} id注入後=${withIds.length}`
+  );
+  return withIds;
 }
 
 export async function runCrawler(
