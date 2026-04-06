@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { generateId } from './id';
+import { generateId, isValidJobId } from './id';
 import { assignIds } from '../crawler';
 import type { JobData } from '../providers/types';
 
@@ -106,5 +106,39 @@ describe('assignIds', () => {
     assert.strictEqual(result.company, job.company);
     assert.strictEqual(result.url, job.url);
     assert.ok(result.id && result.id.length === 8);
+  });
+});
+
+// ── isValidJobId 單元測試（T003）────────────────────────────────
+
+describe('isValidJobId', () => {
+  it('合法 8 碼十六進位回傳 true', () => {
+    assert.strictEqual(isValidJobId('a3f9c021'), true);
+    assert.strictEqual(isValidJobId('00000000'), true);
+    assert.strictEqual(isValidJobId('ffffffff'), true);
+    assert.strictEqual(isValidJobId('deadbeef'), true);
+  });
+
+  it('長度 7 拒絕（回傳 false）', () => {
+    assert.strictEqual(isValidJobId('a3f9c02'), false);
+  });
+
+  it('長度 9 拒絕（回傳 false）', () => {
+    assert.strictEqual(isValidJobId('a3f9c0210'), false);
+  });
+
+  it('大寫字母拒絕（回傳 false）', () => {
+    assert.strictEqual(isValidJobId('A3F9C021'), false);
+    assert.strictEqual(isValidJobId('DEADBEEF'), false);
+  });
+
+  it('空字串拒絕（回傳 false）', () => {
+    assert.strictEqual(isValidJobId(''), false);
+  });
+
+  it('含非十六進位字元拒絕（回傳 false）', () => {
+    assert.strictEqual(isValidJobId('gggggggg'), false);
+    assert.strictEqual(isValidJobId('zzzzzzzz'), false);
+    assert.strictEqual(isValidJobId('a3f9c02!'), false);
   });
 });

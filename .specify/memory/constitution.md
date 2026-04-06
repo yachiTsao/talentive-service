@@ -1,14 +1,17 @@
 <!--
 同步影響報告
-- 版本變更：（無前版）→ 1.0.0
-- 原則異動：全新建立，無前版比較
-- 新增章節：核心原則、適用範圍、遵循與審查流程、治理
+- 版本變更：1.0.0 → 1.1.0
+- 原則異動：
+  - 新增「測試與驗證」章節（參考 ref.md 補齊缺失的測試治理原則）
+  - 更新 PR 審查流程，加入測試覆蓋要求
+- 新增章節：測試與驗證
 - 移除章節：無
 - 需更新的模板：
-  ⚠ pending .specify/templates/plan-template.md
-  ⚠ pending .specify/templates/spec-template.md
-  ⚠ pending .specify/templates/tasks-template.md
-  ⚠ pending .specify/templates/checklist-template.md
+  ✅ updated .specify/templates/plan-template.md（Constitution Check 加入測試閘門）
+  ✅ updated .specify/memory/constitution.md
+  ⚠ pending .specify/templates/spec-template.md（無需變更）
+  ⚠ pending .specify/templates/tasks-template.md（無需變更）
+  ⚠ pending .specify/templates/checklist-template.md（無需變更）
 - 待辦：無
 -->
 
@@ -61,6 +64,18 @@
 - `source` 欄位 MUST 使用 Provider 的 `name` 屬性值，保持可追溯性。
   **理由**：確保下游消費方（前端、分析）可依賴穩定的資料契約。
 
+### 測試與驗證
+
+- 測試執行器 MUST 使用 Node.js 內建 test runner（`node --test`）搭配 `ts-node`，
+  無需額外測試框架。
+- 核心非瀏覽器邏輯 MUST 撰寫單元測試，涵蓋：
+  Provider 輸出欄位格式、URL 去重邏輯、ID 生成工具函式。
+- 測試檔案 MUST 與實作檔案同層放置，命名規則為 `*.test.ts`。
+- Provider 的 `fetch()` 因依賴真實瀏覽器，歸類為整合測試（可選）；
+  但其輸出格式映射邏輯（欄位轉換）MUST 可獨立提取並進行單元測試。
+- 任何新增的工具函式（`utils/`）在合入前 MUST 有對應的 `*.test.ts` 覆蓋。
+  **理由**：確保核心合約穩定，降低重構風險，並使 CI 可在無瀏覽器環境下通過。
+
 ### 效能與資源管理
 
 - 所有非同步操作 MUST 使用 `async/await`；
@@ -104,6 +119,7 @@ Express API 實作、Provider 擴充，以及相關容器化與部署設定。
   - API 回傳結構統一（`{ ok, ... }`）
   - 無資源洩漏（browser 確實關閉）
   - 全程 `async/await`，無硬編碼機密
+  - 新增工具函式已有對應 `*.test.ts` 覆蓋，且 `node --test` 通過
   - 文件為正體中文
 - 任何例外 MUST 明確記錄並取得批准。
 
@@ -116,4 +132,4 @@ Express API 實作、Provider 擴充，以及相關容器化與部署設定。
 - 所有審查 MUST 檢查遵循性；任何合理違反 MUST 記錄於
   Implementation Plan 的 Complexity Tracking。
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-05 | **Last Amended**: 2026-04-05
+**Version**: 1.1.0 | **Ratified**: 2026-04-05 | **Last Amended**: 2026-04-06

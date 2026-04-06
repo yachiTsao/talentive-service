@@ -29,9 +29,19 @@
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 [Gates determined based on constitution file]
+
+<!-- talentive-service 憲法閘門（v1.1.0）：
+  - [ ] 新 Provider 實作 `JobProvider` 介面（`name` + `fetch()`）
+  - [ ] 輸出欄位映射至 `BaseJob`，缺值用 `""` 非 null
+  - [ ] API 回傳統一結構 `{ ok: boolean, ... }`
+  - [ ] 非同步路由使用 `try/catch`，無 raw stack trace 輸出
+  - [ ] 全程 `async/await`，無硬編碼機密
+  - [ ] 新增工具函式須有對應 `*.test.ts`，`node --test` 通過
+  - [ ] 文件（.md）使用正體中文
+-->
 
 ## Project Structure
 
@@ -48,6 +58,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -98,7 +109,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
+| -------------------------- | ------------------ | ------------------------------------ |
+| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |

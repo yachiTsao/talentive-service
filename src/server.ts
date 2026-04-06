@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import fs from "fs";
 import { runCrawler, CrawlerOptions } from "./crawler";
 import { generateId } from "./utils/id";
+import favoritesRouter from "./favorites/router";
+import { getFavoriteIds } from "./favorites/store";
 
 const app = express();
 app.use(express.json({ limit: "256kb" }));
@@ -157,6 +159,37 @@ const openApiSpec = {
         },
       },
     },
+    "/favorites/{id}": {
+      post: {
+        summary: "新增職缺至收藏清單",
+        parameters: [{ in: "path", name: "id", required: true, schema: { type: "string", pattern: "^[0-9a-f]{8}$" }, description: "8 碼十六進位職缺 id" }],
+        responses: {
+          "201": { description: "新增成功", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean" }, data: { type: "object", properties: { id: { type: "string" }, title: { type: "string" }, company: { type: "string" }, location: { type: "string" }, salary: { type: "string" }, url: { type: "string" }, source: { type: "string" }, savedAt: { type: "string" } } } } } } } },
+          "400": { description: "id 格式不合法", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+          "404": { description: "職缺 id 不存在於爬取結果", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+          "409": { description: "職缺已在收藏清單中", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+          "500": { description: "伺服器錯誤", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+        },
+      },
+      delete: {
+        summary: "從收藏清單移除職缺（冪等）",
+        parameters: [{ in: "path", name: "id", required: true, schema: { type: "string", pattern: "^[0-9a-f]{8}$" }, description: "8 碼十六進位職缺 id" }],
+        responses: {
+          "200": { description: "移除成功（或原本不存在）", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: true } } } } } },
+          "400": { description: "id 格式不合法", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+          "500": { description: "伺服器錯誤", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+        },
+      },
+    },
+    "/favorites": {
+      get: {
+        summary: "取得依平台分群的收藏清單",
+        responses: {
+          "200": { description: "分群收藏清單", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: true }, data: { type: "object", additionalProperties: { type: "array", items: { type: "object", properties: { id: { type: "string" }, title: { type: "string" }, company: { type: "string" }, location: { type: "string" }, salary: { type: "string" }, url: { type: "string" }, source: { type: "string" }, savedAt: { type: "string" } } } } } } } } } },
+          "500": { description: "伺服器錯誤", content: { "application/json": { schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } } } } },
+        },
+      },
+    },
   },
 };
 
@@ -236,25 +269,29 @@ app.get("/last", (_req: Request, res: Response) => {
     const parsed: any[] = JSON.parse(txt);
     // FR-009: 若有缺少 id 的筆數，即時補齊後回傳；不改寫磁碟
     const needsPatch = parsed.some((j: any) => !j.id);
-    if (needsPatch) {
-      const patched = parsed.map((j: any) => {
-        if (j.id) return j;
-        if (!j.url) {
-          console.warn(`[GET /last] 無法產生 id，缺少 url: ${JSON.stringify(j)}`);
-          return { ...j, id: "" };
-        }
-        return { ...j, id: generateId(j.url) };
-      });
-      return res.json(patched);
-    }
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.send(txt);
+    const jobs = needsPatch
+      ? parsed.map((j: any) => {
+          if (j.id) return j;
+          if (!j.url) {
+            console.warn(`[GET /last] 無法產生 id，缺少 url: ${JSON.stringify(j)}`);
+            return { ...j, id: "" };
+          }
+          return { ...j, id: generateId(j.url) };
+        })
+      : parsed;
+    // FR-009/FR-010: attach is_fav from favorites store (no lock needed for read)
+    const favIds = getFavoriteIds();
+    return res.json(jobs.map((j: any) => ({ ...j, is_fav: favIds.has(j.id) })));
   } catch (e: any) {
     res.status(500).json({ ok: false, error: e.message });
   }
 });
 
 const port = Number(process.env.PORT || 3000);
+
+// ── Mount routers ────────────────────────────────────────────
+app.use('/favorites', favoritesRouter);
+
 app.listen(port, () => {
   console.log(`[API] listening on :${port}`);
 });
