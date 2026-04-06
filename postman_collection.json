@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Talentive Service API",
+    "description": "職缺爬蟲服務 API — 支援 104、Yourator、1111 平台並行爬取",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "talentive-service-api-v1"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "服務 base URL（本地開發預設）"
+    }
+  ],
+  "item": [
+    {
+      "name": "POST /crawl — 觸發爬蟲",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/crawl",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"keyword\": \"前端工程師\",\n  \"pages\": 1,\n  \"providers\": [\"104\", \"yourator\", \"1111\"],\n  \"delay\": 700,\n  \"debug\": false,\n  \"output\": \"\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "description": "啟動多平台並行爬蟲，回傳本次爬取的所有職缺。\n\n- `keyword`：搜尋關鍵字（預設 `\"前端工程師\"`）\n- `pages`：各 provider 抓取頁數（預設 `1`）\n- `providers`：指定平台清單，支援陣列或逗號分隔字串（預設全部三平台）\n- `delay`：頁面間延遲毫秒（預設 `700`）\n- `output`：輸出檔路徑，空字串代表不寫檔（預設 `/app/data/jobs.json`）\n\n⚠️ 若爬蟲正在執行中，回傳 **409**。"
+      },
+      "response": [
+        {
+          "name": "200 成功",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": true,\n  \"durationMs\": 8432,\n  \"count\": 2,\n  \"data\": [\n    {\n      \"id\": \"a3f9c021\",\n      \"title\": \"前端工程師\",\n      \"company\": \"範例公司\",\n      \"location\": \"台北市\",\n      \"salary\": \"面議\",\n      \"date\": \"2026/04/01\",\n      \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n      \"page\": 1,\n      \"source\": \"104\"\n    },\n    {\n      \"id\": \"7d2e8b14\",\n      \"title\": \"Frontend Engineer\",\n      \"company\": \"另一家公司\",\n      \"location\": \"新北市\",\n      \"salary\": \"60,000–90,000\",\n      \"date\": \"\",\n      \"url\": \"https://www.yourator.co/companies/xxx/jobs/yyy\",\n      \"page\": 1,\n      \"source\": \"yourator\"\n    }\n  ]\n}"
+        },
+        {
+          "name": "409 爬蟲執行中",
+          "status": "Conflict",
+          "code": 409,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": false,\n  \"message\": \"Crawler 正在執行中\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /last — 取得上次爬取結果",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/last",
+        "description": "讀取磁碟上最新一次的爬取結果（`jobs.json`）。\n若舊版資料缺少 `id` 欄位，伺服器即時補齊後回傳，**不改寫磁碟**。"
+      },
+      "response": [
+        {
+          "name": "200 成功",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "[\n  {\n    \"id\": \"a3f9c021\",\n    \"title\": \"前端工程師\",\n    \"company\": \"範例公司\",\n    \"location\": \"台北市\",\n    \"salary\": \"面議\",\n    \"date\": \"2026/04/01\",\n    \"url\": \"https://www.104.com.tw/job/xxxxxxxx\",\n    \"page\": 1,\n    \"source\": \"104\"\n  }\n]"
+        },
+        {
+          "name": "404 尚無資料",
+          "status": "Not Found",
+          "code": 404,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": false,\n  \"message\": \"檔案不存在\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /health — 健康狀態",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health",
+        "description": "確認服務是否正常運作，以及上次爬取時間與筆數。"
+      },
+      "response": [
+        {
+          "name": "200 正常",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"ok\": true,\n  \"running\": false,\n  \"last\": {\n    \"at\": \"2026-04-06T12:00:00.000Z\",\n    \"count\": 42\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET /docs/openapi.json — OpenAPI Spec",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/docs/openapi.json",
+        "description": "取得 OpenAPI 3.0 規格 JSON，可直接匯入 Postman 或其他 API 工具。"
+      }
+    }
+  ]
+}

@@ -6,7 +6,8 @@
     "postinstall": "playwright install chromium",
     "dev": "ts-node src/server.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "node --require ts-node/register --test src/**/*.test.ts"
   },
   "dependencies": {
     "playwright": "^1.55.0",
