@@ -77,19 +77,19 @@
 
 ## 階段五：使用者故事 3 — 工作地點分佈統計（優先級：P2）
 
-**目標**：實作 `groupByLocation`，全部縣市依計數遞減排序、含行政區正規化、空字串歸「不明」並固定末尾。
+**目標**：實作 `groupByLocation`，全部縣市依計數遞減排序、含行政區正規化、空字串歸「其他」並固定末尾。
 
-**獨立驗收測試**：執行 `npx ts-node --test src/utils/chartUtils.test.ts`，確認 `groupByLocation` 的 6 個測試全數通過；在 jobs.json 含行政區及空字串地點時呼叫 `GET /charts`，確認 `locations` 正規化正確且「不明」排末尾。
+**獨立驗收測試**：執行 `npx ts-node --test src/utils/chartUtils.test.ts`，確認 `groupByLocation` 的 6 個測試全數通過；在 jobs.json 含行政區及空字串地點時呼叫 `GET /charts`，確認 `locations` 正規化正確且「其他」排末尾。
 
 ### 使用者故事 3 的測試（依 FR-009 要求）
 
 > **注意：先撰寫測試，確認測試在實作前為失敗狀態（T008）**
 
-- [x] T008 [P] [US3] 在 `src/utils/chartUtils.test.ts` 新增 6 個 `groupByLocation` 測試：(1) 空陣列 → `[]`，(2) 含行政區「台北市信義區」正規化為「台北市」，(3) 空字串 → 「不明」固定末尾，(4) 短地點（<3 字元）維持原值，(5) 「不明」計數最大時仍置末尾，(6) 全部 location 均為空字串 → 僅「不明」一筆（CHK015）
+- [x] T008 [P] [US3] 在 `src/utils/chartUtils.test.ts` 新增 6 個 `groupByLocation` 測試：(1) 空陣列 → `[]`，(2) 含行政區「台北市信義區」正規化為「台北市」，(3) 空字串 → 「其他」固定末尾，(4) 短地點（<3 字元）維持原值，(5) 「其他」計數最大時仍置末尾，(6) 全部 location 均為空字串 → 僅「其他」一筆（CHK015）
 
 ### 使用者故事 3 的實作
 
-- [x] T009 [US3] 在 `src/utils/chartUtils.ts` 實作 `groupByLocation(jobs: BaseJob[]): LocationStat[]` — slice(0,3) 正規化、「不明」鍵獨立處理後強制附加末尾，遵循 FR-005/FR-006
+- [x] T009 [US3] 在 `src/utils/chartUtils.ts` 實作 `groupByLocation(jobs: BaseJob[]): LocationStat[]` — slice(0,3) 正規化、「其他」鍵獨立處理後強制附加末尾，遵循 FR-005/FR-006
 
 **Checkpoint**: `groupByLocation` 的所有測試通過；`src/utils/chartUtils.ts` 三個純函式全部完整
 

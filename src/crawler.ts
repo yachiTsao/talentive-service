@@ -83,7 +83,6 @@ function dedupeByUrl(jobs: JobData[]): JobData[] {
   return [...map.values()];
 }
 
-// id を付与し碰撞フィルタリング（FR-003）
 export function assignIds(jobs: JobData[]): BaseJob[] {
   const seenIds = new Map<string, string>(); // id → url
   const result: BaseJob[] = [];

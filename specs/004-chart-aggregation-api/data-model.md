@@ -41,14 +41,14 @@ export interface TagStat {
 }
 
 export interface LocationStat {
-  location: string; // 正規化後縣市名稱，例如 "台北市"；空字串 → "不明"
+  location: string; // 正規化後縣市名稱，例如 "台北市"；空字串 → "其他"
   count: number;
 }
 
 export interface ChartStats {
   platforms: PlatformStat[]; // 固定 3 筆，依 104 → 1111 → yourator 順序
   tags: TagStat[]; // 最多 4 筆（Top 3 + 「其他」）；無「其他」時省略
-  locations: LocationStat[]; // 全部縣市，依 count 遞減；「不明」固定末尾
+  locations: LocationStat[]; // 全部縣市，依 count 遞減；「其他」固定末尾
   lastCrawledAt: string | null; // ISO 8601 UTC；尚無爬取記錄時為 null
 }
 ```
@@ -104,10 +104,10 @@ export interface ChartStats {
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | 前三字正規化 | `location.slice(0, 3)` 作為縣市鍵值（JavaScript `String.slice` 以 UTF-16 字元為單位，中文三字 = 3 codepoints，英文三字母 = 3 chars，行為一致） |
 | 長度不足     | `location` 長度 < 3 時，維持原值（不補足、不截斷）                                                                                             |
-| 空字串       | `location === ""` → 鍵值為 `"不明"`                                                                                                            |
-| 排序         | 依 `count` 遞減排序；**並列時順序不保證**（使用 JS 穩定排序預設行為，不加額外決勝規則）；「不明」強制置於末尾（即使 count 大於其他縣市）       |
+| 空字串       | `location === ""` → 鍵值為 `"其他"`                                                                                                            |
+| 排序         | 依 `count` 遞減排序；**並列時順序不保證**（使用 JS 穩定排序預設行為，不加額外決勝規則）；「其他」強制置於末尾（即使 count 大於其他縣市）       |
 | 空輸入       | 輸入 `[]` 時回傳 `[]`                                                                                                                          |
-| 全部空字串   | 所有職缺 `location === ""` 時，輸出僅含 `[{ location: "不明", count: n }]` 一筆                                                                |
+| 全部空字串   | 所有職缺 `location === ""` 時，輸出僅含 `[{ location: "其他", count: n }]` 一筆                                                                |
 
 **範例**
 
@@ -119,7 +119,7 @@ export interface ChartStats {
 輸出：[
   { location: "台北市", count: 2 },
   { location: "高雄市", count: 1 },
-  { location: "不明",   count: 1 }   // 強制末尾
+  { location: "其他",   count: 1 }   // 強制末尾
 ]
 ```
 
@@ -174,9 +174,9 @@ function readJobs(): BaseJob[] {
 | **恰好三種技術（無殘餘），「其他」應省略**          | `extractTechTags`（CHK014）          |
 | 含行政區地點正規化（台北市信義區 → 台北市）         | `groupByLocation`                    |
 | 短地點字串（< 3 字元）維持原值                      | `groupByLocation`                    |
-| 空字串地點 → 「不明」                               | `groupByLocation`                    |
-| **所有職缺 location 均為空字串 → 僅「不明」一筆**   | `groupByLocation`（CHK015）          |
-| 「不明」固定末尾（count 大於其他縣市時）            | `groupByLocation`                    |
+| 空字串地點 → 「其他」                               | `groupByLocation`                    |
+| **所有職缺 location 均為空字串 → 僅「其他」一筆**   | `groupByLocation`（CHK015）          |
+| 「其他」固定末尾（count 大於其他縣市時）            | `groupByLocation`                    |
 | 依計數遞減排序                                      | `groupByLocation`、`extractTechTags` |
 
 > **擴充備註（CHK016）**：`TECH_KEYWORDS` 為模組內常數，擴充時只需修改陣列。現有測試硬編碼特定關鍵字，不受未知新增項影響；但若在現有兩個已知關鍵字「之間」插入新項，可能改變計數並列時的穩定排序結果——需同步檢視並列情境的測試。

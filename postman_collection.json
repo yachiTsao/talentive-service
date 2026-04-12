@@ -90,7 +90,7 @@
       "request": {
         "method": "GET",
         "url": "{{baseUrl}}/charts",
-        "description": "聚合 `jobs.json` 回傳三張前端圖表所需的統計資料：\n\n- `platforms`：來源平台比例（104 → 1111 → yourator 固定順序，計數 0 時仍保留）\n- `tags`：前端技術標籤 Top 3 + 其他（依職缺 title 關鍵字推導，大小寫正規化）\n- `locations`：工作地點分佈（含行政區截取為縣市，空字串 → 「不明」並固定末尾）\n- `lastCrawledAt`：最後一次爬取完成的 ISO 8601 UTC 時間；服務重啟後若未再爬取則為 `null`\n\njobs.json 不存在時仍回傳 **200**，三欄位均為空值，**不回傳 404**。"
+        "description": "聚合 `jobs.json` 回傳三張前端圖表所需的統計資料：\n\n- `platforms`：來源平台比例（104 → 1111 → yourator 固定順序，計數 0 時仍保留）\n- `tags`：前端技術標籤 Top 3 + 其他（依職缺 title 關鍵字推導，大小寫正規化）\n- `locations`：工作地點分佈（含行政區截取為縣市，空字串 → 「其他」並固定末尾）\n- `lastCrawledAt`：最後一次爬取完成的 ISO 8601 UTC 時間；服務重啟後若未再爬取則為 `null`\n\njobs.json 不存在時仍回傳 **200**，三欄位均為空值，**不回傳 404**。"
       },
       "response": [
         {
@@ -98,7 +98,7 @@
           "status": "OK",
           "code": 200,
           "header": [{ "key": "Content-Type", "value": "application/json" }],
-          "body": "{\n  \"ok\": true,\n  \"data\": {\n    \"platforms\": [\n      { \"platform\": \"104\",      \"count\": 42 },\n      { \"platform\": \"1111\",     \"count\": 15 },\n      { \"platform\": \"yourator\", \"count\": 28 }\n    ],\n    \"tags\": [\n      { \"tag\": \"Vue\",     \"count\": 30 },\n      { \"tag\": \"React\",   \"count\": 20 },\n      { \"tag\": \"Angular\", \"count\": 10 },\n      { \"tag\": \"其他\",     \"count\": 25 }\n    ],\n    \"locations\": [\n      { \"location\": \"台北市\", \"count\": 60 },\n      { \"location\": \"新北市\", \"count\": 15 },\n      { \"location\": \"不明\",   \"count\": 10 }\n    ],\n    \"lastCrawledAt\": \"2026-04-12T08:00:00.000Z\"\n  }\n}"
+          "body": "{\n  \"ok\": true,\n  \"data\": {\n    \"platforms\": [\n      { \"platform\": \"104\",      \"count\": 42 },\n      { \"platform\": \"1111\",     \"count\": 15 },\n      { \"platform\": \"yourator\", \"count\": 28 }\n    ],\n    \"tags\": [\n      { \"tag\": \"Vue\",     \"count\": 30 },\n      { \"tag\": \"React\",   \"count\": 20 },\n      { \"tag\": \"Angular\", \"count\": 10 },\n      { \"tag\": \"其他\",     \"count\": 25 }\n    ],\n    \"locations\": [\n      { \"location\": \"台北市\", \"count\": 60 },\n      { \"location\": \"新北市\", \"count\": 15 },\n      { \"location\": \"其他\",   \"count\": 10 }\n    ],\n    \"lastCrawledAt\": \"2026-04-12T08:00:00.000Z\"\n  }\n}"
         },
         {
           "name": "200 成功（jobs.json 不存在）",

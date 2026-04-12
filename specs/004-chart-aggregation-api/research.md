@@ -113,7 +113,7 @@ interface LocationStat {
 interface ChartStats {
   platforms: PlatformStat[]; // 固定 3 筆
   tags: TagStat[]; // 最多 4 筆（Top 3 + 「其他」）
-  locations: LocationStat[]; // 全部縣市，「不明」末尾
+  locations: LocationStat[]; // 全部縣市，「其他」末尾
   lastCrawledAt: string | null; // 由 server.ts 注入，非 chartUtils 計算
 }
 ```

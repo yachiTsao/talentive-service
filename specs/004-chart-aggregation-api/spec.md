@@ -10,7 +10,7 @@
 ### Session 2026-04-12
 
 - Q: 技術標籤資料來源為何：查詢時從 `title` 關鍵字推導，還是爬蟲端直接產生 `tags[]` 欄位？ → A: 查詢時從 `title` 推導，chartUtils.ts 內部做關鍵字比對；不異動現有 providers 或 Job schema。
-- Q: `locations` 陣列中（除「不明」外）其餘縣市的排列順序為何？ → A: 依計數遞減排序，職缺數量多的縣市排前面；「不明」固定末尾。
+- Q: `locations` 陣列中（除「其他」外）其餘縣市的排列順序為何？ → A: 依計數遞減排序，職缺數量多的縣市排前面；「其他」固定末尾。
 - Q: `GET /charts` 的資料來源為直接讀取 jobs.json，還是重用 `GET /last` 的資料讀取邏輯？ → A: 重用 `GET /last` 的內部讀檔函式，共用相同的讀取路徑、錯誤處理與 crash-safe 行為，不另起讀取路徑。
 - Q: `GET /charts` 是否需要加入認證授權（auth）機制？ → A: 不需要，與現有所有端點保持一致，無 auth 要求。
 - Q: `GET /charts` 回應是否需要附加資料新鮮度資訊（最後爬取時間）？ → A: 需要，在 `data` 中加入 `lastCrawledAt` 欄位（與 `GET /health` 的 `last.at` 來源相同）；若尚無爬取記錄則為 `null`。
@@ -52,16 +52,16 @@
 
 ### User Story 3 - 取得工作地點分佈統計 (Priority: P2)
 
-前端在呈現「工作地點分佈」折線圖前，可從 `GET /charts` 回應中取得正規化後各縣市的職缺計數，所有縣市均呈現。含行政區的地點字串（如「台北市信義區」）已被截取為縣市（「台北市」），空字串地點已歸類為「不明」並排列於末尾。
+前端在呈現「工作地點分佈」折線圖前，可從 `GET /charts` 回應中取得正規化後各縣市的職缺計數，所有縣市均呈現。含行政區的地點字串（如「台北市信義區」）已被截取為縣市（「台北市」），空字串地點已歸類為「其他」並排列於末尾。
 
 **Why this priority**: 地點分佈是第三個圖表維度，與平台、技術統計同屬聚合端點的獨立欄位，可獨立驗收。
 
-**Independent Test**: 在 jobs.json 中備妥含行政區地點、純縣市地點及空字串地點的職缺，呼叫 `GET /charts` 後確認含行政區正規化、空字串歸為「不明」且排末尾。
+**Independent Test**: 在 jobs.json 中備妥含行政區地點、純縣市地點及空字串地點的職缺，呼叫 `GET /charts` 後確認含行政區正規化、空字串歸為「其他」且排末尾。
 
 **Acceptance Scenarios**:
 
 1. **Given** 職缺 location 含「台北市信義區」（3 筆）、「台北市中山區」（2 筆）、「高雄市」（4 筆），**When** 呼叫 `GET /charts`，**Then** `locations` 中「台北市」計數為 5、「高雄市」為 4，含行政區的兩筆已正規化合併。
-2. **Given** 部分職缺 location 為空字串（2 筆），**When** 呼叫 `GET /charts`，**Then** `locations` 末尾出現「不明」計數為 2，其餘縣市排在前面。
+2. **Given** 部分職缺 location 為空字串（2 筆），**When** 呼叫 `GET /charts`，**Then** `locations` 末尾出現「其他」計數為 2，其餘縣市排在前面。
 3. **Given** 所有縣市資料均有計數，**When** 呼叫 `GET /charts`，**Then** `locations` 包含所有縣市，不做數量截斷（不限制只顯示前 N 筆）。
 
 ---
@@ -82,8 +82,8 @@
 - **FR-002**: `platforms` 欄位**必須**固定包含 `"104"`、`"1111"`、`"yourator"` 三個平台的計數（值與 Job `source` 欄位一致，均為小寫），且依此固定順序排列，計數為 0 時仍保留不省略。
 - **FR-003**: `tags` 欄位**必須**依匹配頻率遞減排序，僅回傳前三名技術標籤；其餘技術計數合計為「其他」，若無「其他」則省略。
 - **FR-004**: 技術標籤比對時**必須**進行大小寫正規化（統一轉為首字大寫），相同技術的不同大小寫形式合併計算。
-- **FR-005**: `locations` 欄位**必須**對含行政區的地點字串取前三個字元作為縣市鍵值，空字串地點歸為「不明」。
-- **FR-006**: `locations` 中其餘縣市**必須**依計數遞減排序；「不明」項目**必須**固定排列於陣列末尾，不限制縣市顯示數量。
+- **FR-005**: `locations` 欄位**必須**對含行政區的地點字串取前三個字元作為縣市鍵值，空字串地點歸為「其他」。
+- **FR-006**: `locations` 中其餘縣市**必須**依計數遞減排序；「其他」項目**必須**固定排列於陣列末尾，不限制縣市顯示數量。
 - **FR-007**: 所有聚合計算邏輯（平台分組、標籤統計與正規化、地點正規化）**必須**以無副作用的純函式實作，集中於 `src/utils/chartUtils.ts`。
 - **FR-008**: `GET /charts` 端點**必須**重用 `GET /last` 的內部資料讀取函式取得職缺陣列，不自行實作讀檔邏輯，也不重新觸發爬蟲。
 - **FR-009**: `src/utils/chartUtils.ts` 中的每個純函式**必須**有對應的單元測試覆蓋（含邊界情境：空陣列、大小寫混用、含行政區地點、空字串地點）。
@@ -94,7 +94,7 @@
 - **ChartStats**：`GET /charts` 的回應 data 欄位結構，包含四個欄位：
   - `platforms`: `Array<{ platform: "104" | "1111" | "yourator"; count: number }>` — 固定三筆，依 104 → 1111 → yourator 順序排列；`platform` 值與 Job `source` 欄位相同（小寫）
   - `tags`: `Array<{ tag: string; count: number }>` — 最多四筆（Top 3 + 「其他」），依計數遞減排序；`tags` 為空時回傳空陣列
-  - `locations`: `Array<{ location: string; count: number }>` — 所有縣市依計數遞減排序，「不明」固定末尾
+  - `locations`: `Array<{ location: string; count: number }>` — 所有縣市依計數遞減排序，「其他」固定末尾
   - `lastCrawledAt`: `string | null` — 最後一次爬取完成的 ISO 8601 UTC 時間戳；與 `GET /health` 的 `last.at` 來源相同，尚無爬取記錄時為 `null`
 - **回應 Envelope**：遵循現有 SD 慣例，成功時 `{ ok: true, data: ChartStats }`，錯誤時 `{ ok: false, error: string }`。
 - **chartUtils 純函式**：接受 `BaseJob[]` 陣列作為輸入，各函式分別輸出 `platforms`、`tags`、`locations` 統計結果，無外部依賴。

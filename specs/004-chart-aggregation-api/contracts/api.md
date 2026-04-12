@@ -38,7 +38,7 @@ GET /charts
     "locations": [
       { "location": "台北市", "count": 12 },
       { "location": "新北市", "count": 5 },
-      { "location": "不明", "count": 2 }, // 空字串地點；固定末尾
+      { "location": "其他", "count": 2 }, // 空字串地點；固定末尾
     ],
     "lastCrawledAt": "2026-04-12T08:00:00.000Z", // ISO 8601 UTC；尚無爬取記錄時為 null
   },
@@ -106,11 +106,11 @@ GET /charts
 
 | 欄位       | 型別     | 說明                                        |
 | ---------- | -------- | ------------------------------------------- |
-| `location` | `string` | 正規化後縣市名稱；空字串地點顯示為 `"不明"` |
+| `location` | `string` | 正規化後縣市名稱；空字串地點顯示為 `"其他"` |
 | `count`    | `number` | 該縣市的職缺計數（≥ 1）                     |
 
 - 包含所有計數 ≥ 1 的縣市，不限制數量
-- 依 `count` 遞減排序；`"不明"` 固定末尾（無論 count 大小）
+- 依 `count` 遞減排序；`"其他"` 固定末尾（無論 count 大小）
 - jobs.json 不存在時回傳 `[]`
 
 ### `lastCrawledAt`

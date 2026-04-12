@@ -115,14 +115,14 @@ test("groupByLocation 含行政區地點正規化", () => {
   assert.equal(taipei.count, 2);
 });
 
-test("groupByLocation 空字串歸為「不明」且排末尾", () => {
+test("groupByLocation 空字串歸為「其他」且排末尾", () => {
   const jobs = [
     job({ location: "" }),
     job({ location: "台北市" }),
     job({ location: "" }),
   ];
   const result = groupByLocation(jobs);
-  assert.equal(result[result.length - 1].location, "不明");
+  assert.equal(result[result.length - 1].location, "其他");
   assert.equal(result[result.length - 1].count, 2);
 });
 
@@ -133,17 +133,17 @@ test("groupByLocation 短地點字串（< 3 字元）在縣市縮寫表中對應
   assert.equal(result[0].count, 1);
 });
 
-test("groupByLocation「不明」計數最大時仍在末尾", () => {
+test("groupByLocation「其他」計數最大時仍在末尾", () => {
   const jobs = [
     ...Array(5).fill(null).map(() => job({ location: "" })),
     job({ location: "台北市" }),
   ];
   const result = groupByLocation(jobs);
-  assert.equal(result[result.length - 1].location, "不明");
+  assert.equal(result[result.length - 1].location, "其他");
   assert.equal(result[result.length - 1].count, 5);
 });
 
-test("groupByLocation 全部 location 為空字串時僅回傳「不明」一筆", () => {
+test("groupByLocation 全部 location 為空字串時僅回傳「其他」一筆", () => {
   const jobs = [
     job({ location: "" }),
     job({ location: "" }),
@@ -151,6 +151,6 @@ test("groupByLocation 全部 location 為空字串時僅回傳「不明」一筆
   ];
   const result = groupByLocation(jobs);
   assert.equal(result.length, 1);
-  assert.equal(result[0].location, "不明");
+  assert.equal(result[0].location, "其他");
   assert.equal(result[0].count, 3);
 });

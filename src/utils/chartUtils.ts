@@ -139,23 +139,23 @@ export function groupByLocation(jobs: BaseJob[]): LocationStat[] {
     const raw = job.location;
     let key: string;
     if (raw === "") {
-      key = "不明";
+      key = "其他";
     } else if (raw.length < 3) {
-      key = CITY_SHORT_MAP[raw] ?? "不明";
+      key = CITY_SHORT_MAP[raw] ?? "其他";
     } else {
       const prefix = raw.slice(0, 3);
-      key = TAIWAN_CITIES.has(prefix) ? prefix : "不明";
+      key = TAIWAN_CITIES.has(prefix) ? prefix : "其他";
     }
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
 
-  const unknown = counts.get("不明") ?? 0;
-  counts.delete("不明");
+  const unknown = counts.get("其他") ?? 0;
+  counts.delete("其他");
 
   const sorted = [...counts.entries()]
     .sort((a, b) => b[1] - a[1])
     .map(([location, count]) => ({ location, count }));
 
-  if (unknown > 0) sorted.push({ location: "不明", count: unknown });
+  if (unknown > 0) sorted.push({ location: "其他", count: unknown });
   return sorted;
 }

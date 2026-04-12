@@ -44,7 +44,7 @@
 ## Scenario Coverage — 邊界情境是否涵蓋
 
 - [x] CHK014 — 恰好有三種已知技術（剛好等於 Top 3 上限）時，「其他」應被省略——此情境是否有明確的測試情境或範例？ [Coverage, Edge Case, data-model.md §extractTechTags] ✓ 已補充至 data-model.md 測試涵蓋矩陣；data-model.md 規則「若前三名已涵蓋所有計數（無殘餘），不加入『其他』」已明確定義，quickstart 程式碼 `if (restCount > 0)` 實作一致
-- [x] CHK015 — `groupByLocation` 中若所有職缺地點均為空字串（全部為「不明」），輸出應為僅含「不明」一筆——此情境是否已定義？ [Coverage, Edge Case, Gap] ✓ 已補充至 data-model.md §groupByLocation 表格（「全部空字串」規格列）與測試涵蓋矩陣
+- [x] CHK015 — `groupByLocation` 中若所有職缺地點均為空字串（全部為「其他」），輸出應為僅含「其他」一筆——此情境是否已定義？ [Coverage, Edge Case, Gap] ✓ 已補充至 data-model.md §groupByLocation 表格（「全部空字串」規格列）與測試涵蓋矩陣
 - [x] CHK016 — `extractTechTags` 中 TECH_KEYWORDS 若未來擴充（如加入 `Astro`），現有規格是否確保舊測試不需修改（函式行為對清單異動是否穩定）？ [Coverage, Assumption] ✓ 已補充擴充備註至 data-model.md：新增項目不影響現有測試；若在並列項之間插入則需同步檢視並列測試
 
 ---

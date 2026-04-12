@@ -137,7 +137,7 @@ ChartStats 物件：
   "locations": [
     { "location": "台北市", "count": 60 },
     { "location": "新北市", "count": 15 },
-    { "location": "不明", "count": 10 }, // 空字串地點；固定末尾
+    { "location": "其他", "count": 10 }, // 空字串地點；固定末尾
   ],
   "lastCrawledAt": "2026-04-12T08:00:00.000Z", // null 若服務啟動後未爬取
 }

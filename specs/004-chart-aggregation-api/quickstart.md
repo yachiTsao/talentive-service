@@ -110,18 +110,18 @@ export function groupByLocation(jobs: BaseJob[]): LocationStat[] {
 
   for (const job of jobs) {
     const raw = job.location;
-    const key = raw === "" ? "不明" : raw.length >= 3 ? raw.slice(0, 3) : raw;
+    const key = raw === "" ? "其他" : raw.length >= 3 ? raw.slice(0, 3) : raw;
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
 
-  const unknown = counts.get("不明") ?? 0;
-  counts.delete("不明");
+  const unknown = counts.get("其他") ?? 0;
+  counts.delete("其他");
 
   const sorted = [...counts.entries()]
     .sort((a, b) => b[1] - a[1])
     .map(([location, count]) => ({ location, count }));
 
-  if (unknown > 0) sorted.push({ location: "不明", count: unknown });
+  if (unknown > 0) sorted.push({ location: "其他", count: unknown });
   return sorted;
 }
 ```
@@ -233,14 +233,14 @@ test("groupByLocation 含行政區地點正規化", () => {
   assert.equal(taipei.count, 2);
 });
 
-test("groupByLocation 空字串歸為「不明」且排末尾", () => {
+test("groupByLocation 空字串歸為「其他」且排末尾", () => {
   const jobs = [
     job({ location: "" }),
     job({ location: "台北市" }),
     job({ location: "" }),
   ];
   const result = groupByLocation(jobs);
-  assert.equal(result[result.length - 1].location, "不明");
+  assert.equal(result[result.length - 1].location, "其他");
   assert.equal(result[result.length - 1].count, 2);
 });
 
@@ -250,13 +250,13 @@ test("groupByLocation 短地點字串（< 3 字元）維持原值", () => {
   assert.equal(result[0].location, "台北");
 });
 
-test("groupByLocation「不明」計數最大時仍在末尾", () => {
+test("groupByLocation「其他」計數最大時仍在末尾", () => {
   const jobs = [
     ...Array(5).fill(job({ location: "" })),
     job({ location: "台北市" }),
   ];
   const result = groupByLocation(jobs);
-  assert.equal(result[result.length - 1].location, "不明");
+  assert.equal(result[result.length - 1].location, "其他");
   assert.equal(result[result.length - 1].count, 5);
 });
 ```

@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 import { JobData, JobProvider, ProviderOptions } from './types';
 
-// 104 Provider：直接呼叫官方搜尋 API
+// 104 Provider：瀏覽推薦頁並截攔 /jobs/search/api/jobs 回應（搭配 stealth 繞過反爬蟲）
 export const Provider104: JobProvider = {
   name: '104',
   async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
@@ -12,39 +12,54 @@ export const Provider104: JobProvider = {
     let totalPageLimit: number | null = null;
 
     for (let p = 1; p <= pages; p++) {
-      const searchApi = `https://www.104.com.tw/jobs/search/list?keyword=${encoded}&page=${p}&mode=s&jobsource=2018indexpoc`;
-      if (debug) console.log(`[DEBUG][104] 請求 ${searchApi}`);
+      // 推薦頁會自動呼叫 /jobs/search/api/jobs，可安全截攔
+      const seedUrl = `https://www.104.com.tw/jobs/recommend/?jobsource=joblist_search&keyword=${encoded}&page=${p}&mode=s`;
+      const apiUrl = `https://www.104.com.tw/jobs/search/api/jobs?keyword=${encoded}&page=${p}&mode=s&jobsource=joblist_search`;
+      if (debug) console.log(`[DEBUG][104] 瀏覽第 ${p} 頁`);
       try {
-        const resp = await page.request.get(searchApi, {
-          headers: {
-            'Referer': 'https://www.104.com.tw/jobs/search/?keyword=' + encoded,
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118 Safari/537.36',
-            'Accept': 'application/json, text/plain, */*'
-          }
+        const captured: { body: string } | null = await new Promise(async (resolve) => {
+          let done = false;
+          const handler = async (r: any) => {
+            if (!done && r.url().includes('/jobs/search/api/jobs')) {
+              done = true;
+              page.off('response', handler);
+              const body = await r.text().catch(() => '');
+              resolve({ body });
+            }
+          };
+          page.on('response', handler);
+          // 第一頁：瀏覽推薦頁（自然觸發 API）；後續頁：直接 goto API URL
+          const gotoUrl = p === 1 ? seedUrl : apiUrl;
+          await page.goto(gotoUrl, { waitUntil: 'domcontentloaded', timeout: 30_000 }).catch(() => {});
+          await new Promise(r => setTimeout(r, 8000));
+          if (!done) { page.off('response', handler); resolve(null); }
         });
-        if (!resp.ok()) {
-          console.warn(`[WARN][104] 第 ${p} 頁失敗: ${resp.status()} ${resp.statusText()}`);
-          if (resp.status() === 404) break; else continue;
+
+        if (!captured) {
+          console.warn(`[WARN][104] 第 ${p} 頁未攔到 API 回應，停止`);
+          break;
         }
-        const json: any = await resp.json();
+        const json: any = JSON.parse(captured.body);
         if (totalPageLimit == null) {
-          totalPageLimit = json?.data?.page?.totalPage ?? null;
+          totalPageLimit = json?.metadata?.pagination?.lastPage ?? null;
           if (debug && totalPageLimit) console.log(`[DEBUG][104] 總頁數=${totalPageLimit}`);
         }
-        const list: any[] = json?.data?.list || [];
+        const list: any[] = json?.data || [];
         if (!list.length) {
           if (debug) console.log(`[DEBUG][104] 第 ${p} 頁空，停止`);
           break;
         }
         const pageJobs: JobData[] = list.map(item => ({
           title: item.jobName || '',
-            company: item.custName || '',
-            location: item.jobAddrNoDesc || '',
-            salary: item.salaryDesc || item.appearSalary || '',
-            date: item.appearDate || '',
-            url: 'https://www.104.com.tw/job/' + item.jobNo,
-            page: p,
-            source: '104'
+          company: item.custName || '',
+          location: item.jobAddrNoDesc || '',
+          salary: item.salaryLow && item.salaryHigh
+            ? `${item.salaryLow}-${item.salaryHigh}`
+            : '',
+          date: item.appearDate || '',
+          url: item.link?.job || `https://www.104.com.tw/job/${item.jobNo}`,
+          page: p,
+          source: '104'
         }));
         if (debug) console.log(`[DEBUG][104] 第 ${p} 頁取回 ${pageJobs.length} 筆`);
         results.push(...pageJobs);
