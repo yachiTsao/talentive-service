@@ -81,13 +81,71 @@ export function extractTechTags(jobs: BaseJob[]): TagStat[] {
   return top3;
 }
 
-// ── 圖表三：工作地點分佈 ─────────────────────────────────────
+// ── 台灣縣市對照表（含台/臺兩種寫法）──────────────────────────
+const TAIWAN_CITIES = new Set([
+  "臺北市", "台北市",
+  "新北市",
+  "桃園市",
+  "臺中市", "台中市",
+  "臺南市", "台南市",
+  "高雄市",
+  "基隆市",
+  "新竹市",
+  "嘉義市",
+  "新竹縣",
+  "苗栗縣",
+  "彰化縣",
+  "南投縣",
+  "雲林縣",
+  "嘉義縣",
+  "屏東縣",
+  "宜蘭縣",
+  "花蓮縣",
+  "臺東縣", "台東縣",
+  "澎湖縣",
+  "金門縣",
+  "連江縣",
+]);
+
+/** 2 字元縣市縮寫 → 標準名稱（用於 location 啟頭為两字時） */
+const CITY_SHORT_MAP: Record<string, string> = {
+  "臺北": "臺北市", "台北": "台北市",
+  "新北": "新北市",
+  "桃園": "桃園市",
+  "臺中": "臺中市", "台中": "台中市",
+  "臺南": "臺南市", "台南": "台南市",
+  "高雄": "高雄市",
+  "基隆": "基隆市",
+  "新竹": "新竹市",
+  "嘉義": "嘉義市",
+  "苗栗": "苗栗縣",
+  "彰化": "彰化縣",
+  "南投": "南投縣",
+  "雲林": "雲林縣",
+  "屏東": "屏東縣",
+  "宜蘭": "宜蘭縣",
+  "花蓮": "花蓮縣",
+  "臺東": "臺東縣", "台東": "台東縣",
+  "澎湖": "澎湖縣",
+  "金門": "金門縣",
+  "連江": "連江縣",
+};
+
+// ── 圖表三：工作地點分佈 ───────────────────────────────────────
 export function groupByLocation(jobs: BaseJob[]): LocationStat[] {
   const counts = new Map<string, number>();
 
   for (const job of jobs) {
     const raw = job.location;
-    const key = raw === "" ? "不明" : raw.length >= 3 ? raw.slice(0, 3) : raw;
+    let key: string;
+    if (raw === "") {
+      key = "不明";
+    } else if (raw.length < 3) {
+      key = CITY_SHORT_MAP[raw] ?? "不明";
+    } else {
+      const prefix = raw.slice(0, 3);
+      key = TAIWAN_CITIES.has(prefix) ? prefix : "不明";
+    }
     counts.set(key, (counts.get(key) ?? 0) + 1);
   }
 

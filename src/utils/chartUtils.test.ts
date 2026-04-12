@@ -126,10 +126,11 @@ test("groupByLocation 空字串歸為「不明」且排末尾", () => {
   assert.equal(result[result.length - 1].count, 2);
 });
 
-test("groupByLocation 短地點字串（< 3 字元）維持原值", () => {
+test("groupByLocation 短地點字串（< 3 字元）在縣市縮寫表中對應臺北市", () => {
   const jobs = [job({ location: "台北" })];
   const result = groupByLocation(jobs);
-  assert.equal(result[0].location, "台北");
+  assert.equal(result[0].location, "台北市");
+  assert.equal(result[0].count, 1);
 });
 
 test("groupByLocation「不明」計數最大時仍在末尾", () => {

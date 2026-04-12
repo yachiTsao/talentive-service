@@ -304,6 +304,21 @@ function readJobs(): BaseJob[] {
   return JSON.parse(txt) as BaseJob[];
 }
 
+/** 讀取並補齊舊版缺少 id 的職缺；/last 與 /charts 共用同一資料管道 */
+function readPatchedJobs(): BaseJob[] {
+  const jobs = readJobs();
+  const needsPatch = jobs.some((j: any) => !j.id);
+  if (!needsPatch) return jobs;
+  return jobs.map((j: any) => {
+    if (j.id) return j;
+    if (!j.url) {
+      console.warn(`[readPatchedJobs] 無法產生 id，缺少 url: ${JSON.stringify(j)}`);
+      return { ...j, id: "" };
+    }
+    return { ...j, id: generateId(j.url) };
+  });
+}
+
 // ── lastMeta 持久化（meta.json，與 jobs.json 同目錄）────────
 function metaPath(): string {
   const output = process.env.OUTPUT || "/app/data/jobs.json";
@@ -373,19 +388,7 @@ app.get("/last", (_req: Request, res: Response) => {
   if (!fs.existsSync(output))
     return res.status(404).json({ ok: false, message: "檔案不存在" });
   try {
-    const parsed = readJobs();
-    // FR-009: 若有缺少 id 的筆數，即時補齊後回傳；不改寫磁碟
-    const needsPatch = parsed.some((j: any) => !j.id);
-    const jobs = needsPatch
-      ? parsed.map((j: any) => {
-          if (j.id) return j;
-          if (!j.url) {
-            console.warn(`[GET /last] 無法產生 id，缺少 url: ${JSON.stringify(j)}`);
-            return { ...j, id: "" };
-          }
-          return { ...j, id: generateId(j.url) };
-        })
-      : parsed;
+    const jobs = readPatchedJobs();
     // FR-009/FR-010: attach is_fav from favorites store (no lock needed for read)
     const favIds = getFavoriteIds();
     return res.json(jobs.map((j: any) => ({ ...j, is_fav: favIds.has(j.id) })));
@@ -396,7 +399,7 @@ app.get("/last", (_req: Request, res: Response) => {
 
 app.get("/charts", (_req: Request, res: Response) => {
   try {
-    const jobs = readJobs();
+    const jobs = readPatchedJobs();
     const stats: ChartStats = {
       platforms: groupByPlatform(jobs),
       tags: extractTechTags(jobs),
