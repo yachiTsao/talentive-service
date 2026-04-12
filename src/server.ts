@@ -4,6 +4,13 @@ import { runCrawler, CrawlerOptions } from "./crawler";
 import { generateId } from "./utils/id";
 import favoritesRouter from "./favorites/router";
 import { getFavoriteIds } from "./favorites/store";
+import {
+  groupByPlatform,
+  extractTechTags,
+  groupByLocation,
+  type ChartStats,
+} from "./utils/chartUtils";
+import type { BaseJob } from "./providers/types";
 
 const app = express();
 app.use(express.json({ limit: "256kb" }));
@@ -181,6 +188,71 @@ const openApiSpec = {
         },
       },
     },
+    "/charts": {
+      get: {
+        summary: "取得圖表統計資料",
+        description: "聚合 jobs.json 回傳三張圖表所需統計：來源平台比例、前端技術標籤 Top 3、工作地點分佈，附帶最後爬取時間戳",
+        responses: {
+          "200": {
+            description: "圖表統計資料",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    ok: { type: "boolean", example: true },
+                    data: {
+                      type: "object",
+                      properties: {
+                        platforms: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              platform: { type: "string", example: "104" },
+                              count: { type: "number", example: 42 },
+                            },
+                          },
+                        },
+                        tags: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              tag: { type: "string", example: "Vue" },
+                              count: { type: "number", example: 30 },
+                            },
+                          },
+                        },
+                        locations: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              location: { type: "string", example: "台北市" },
+                              count: { type: "number", example: 20 },
+                            },
+                          },
+                        },
+                        lastCrawledAt: { type: "string", nullable: true, example: "2026-04-12T08:00:00.000Z" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "500": {
+            description: "伺服器錯誤",
+            content: {
+              "application/json": {
+                schema: { type: "object", properties: { ok: { type: "boolean", example: false }, error: { type: "string" } } },
+              },
+            },
+          },
+        },
+      },
+    },
     "/favorites": {
       get: {
         summary: "取得依平台分群的收藏清單",
@@ -224,6 +296,14 @@ app.get("/docs", (_req: Request, res: Response) => {
 </html>`);
 });
 
+/** 讀取 jobs.json；檔案不存在時回傳 []，無效 JSON 時拋出例外 */
+function readJobs(): BaseJob[] {
+  const output = process.env.OUTPUT || "/app/data/jobs.json";
+  if (!fs.existsSync(output)) return [];
+  const txt = fs.readFileSync(output, "utf-8");
+  return JSON.parse(txt) as BaseJob[];
+}
+
 let isRunning = false;
 let lastMeta: { at: string; count: number } | null = null;
 
@@ -265,8 +345,7 @@ app.get("/last", (_req: Request, res: Response) => {
   if (!fs.existsSync(output))
     return res.status(404).json({ ok: false, message: "檔案不存在" });
   try {
-    const txt = fs.readFileSync(output, "utf-8");
-    const parsed: any[] = JSON.parse(txt);
+    const parsed = readJobs();
     // FR-009: 若有缺少 id 的筆數，即時補齊後回傳；不改寫磁碟
     const needsPatch = parsed.some((j: any) => !j.id);
     const jobs = needsPatch
@@ -282,6 +361,21 @@ app.get("/last", (_req: Request, res: Response) => {
     // FR-009/FR-010: attach is_fav from favorites store (no lock needed for read)
     const favIds = getFavoriteIds();
     return res.json(jobs.map((j: any) => ({ ...j, is_fav: favIds.has(j.id) })));
+  } catch (e: any) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+app.get("/charts", (_req: Request, res: Response) => {
+  try {
+    const jobs = readJobs();
+    const stats: ChartStats = {
+      platforms: groupByPlatform(jobs),
+      tags: extractTechTags(jobs),
+      locations: groupByLocation(jobs),
+      lastCrawledAt: lastMeta?.at ?? null,
+    };
+    res.json({ ok: true, data: stats });
   } catch (e: any) {
     res.status(500).json({ ok: false, error: e.message });
   }
