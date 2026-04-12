@@ -304,8 +304,35 @@ function readJobs(): BaseJob[] {
   return JSON.parse(txt) as BaseJob[];
 }
 
+// ── lastMeta 持久化（meta.json，與 jobs.json 同目錄）────────
+function metaPath(): string {
+  const output = process.env.OUTPUT || "/app/data/jobs.json";
+  return output.replace(/[^/\\]*$/, "meta.json");
+}
+
+function loadMeta(): { at: string; count: number } | null {
+  const p = metaPath();
+  try {
+    if (!fs.existsSync(p)) return null;
+    return JSON.parse(fs.readFileSync(p, "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
+function saveMeta(meta: { at: string; count: number }): void {
+  const p = metaPath();
+  const tmp = p + ".tmp";
+  try {
+    fs.writeFileSync(tmp, JSON.stringify(meta), "utf-8");
+    fs.renameSync(tmp, p);
+  } catch (e) {
+    console.warn("[meta] 寫入失敗:", e);
+  }
+}
+
 let isRunning = false;
-let lastMeta: { at: string; count: number } | null = null;
+let lastMeta: { at: string; count: number } | null = loadMeta();
 
 app.post("/crawl", async (req: Request, res: Response) => {
   if (isRunning) {
@@ -323,6 +350,7 @@ app.post("/crawl", async (req: Request, res: Response) => {
     }
     const data = await runCrawler(body as Partial<CrawlerOptions>);
     lastMeta = { at: new Date().toISOString(), count: data.length };
+    saveMeta(lastMeta);
     res.json({
       ok: true,
       durationMs: Date.now() - started,
