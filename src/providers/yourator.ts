@@ -1,13 +1,13 @@
 import { Page } from 'playwright';
-import { BaseJob, JobProvider, ProviderOptions } from './types';
+import { JobData, JobProvider, ProviderOptions } from './types';
 
 // Yourator Provider (新版): 不直接呼叫 API。流程: 首頁 -> 搜尋輸入 -> 送出 -> 擷取結果 -> 多頁以 URL 導航。
 export const ProviderYourator: JobProvider = {
   name: 'yourator',
-  async fetch(page: Page, options: ProviderOptions): Promise<BaseJob[]> {
+  async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
     const { keyword, pages, delay, debug } = options;
     const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
-    const results: BaseJob[] = [];
+    const results: JobData[] = [];
 
     async function dump(tag: string) {
       if (!debug) return;
@@ -77,7 +77,7 @@ export const ProviderYourator: JobProvider = {
         }
         await page.waitForSelector('#normal-jobs a[href^="/companies/"][href*="/jobs/"], #scroll-monitored-jobs a[href^="/companies/"][href*="/jobs/"]', { timeout: 8000 }).catch(()=>{});
 
-        const pageJobs: BaseJob[] = await page.$$eval(
+        const pageJobs: JobData[] = await page.$$eval(
           '#normal-jobs a[href^="/companies/"][href*="/jobs/"], #scroll-monitored-jobs a[href^="/companies/"][href*="/jobs/"]',
           (anchors) => {
             function pickTitle(lines: string[]): string {
