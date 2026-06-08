@@ -16,7 +16,8 @@ FROM base AS build
 COPY tsconfig.json ./
 COPY src ./src
 # 安裝 devDependencies 以便 tsc (在 build stage 單獨安裝, 不中轉到最終 runtime)
-RUN npm install --no-audit --no-fund
+# PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 避免 postinstall 重複下載瀏覽器
+RUN PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-audit --no-fund
 RUN npm run build
 
 # -------- Runtime --------
@@ -45,6 +46,6 @@ ENV KEYWORD="前端工程師" \
     OUTPUT="/app/data/jobs.json" \
     DEBUG=false
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 EXPOSE 3000
 CMD ["node","dist/server.js"]
