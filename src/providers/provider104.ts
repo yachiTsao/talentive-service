@@ -1,5 +1,6 @@
 import { Page } from 'playwright';
 import { JobData, JobProvider, ProviderOptions } from './types';
+import { sleep } from '../utils/sleep';
 
 // 104 Provider：瀏覽推薦頁並截攔 /jobs/search/api/jobs 回應（搭配 stealth 繞過反爬蟲）
 export const Provider104: JobProvider = {
@@ -8,7 +9,6 @@ export const Provider104: JobProvider = {
     const { keyword, pages, delay, debug } = options;
     const results: JobData[] = [];
     const encoded = encodeURIComponent(keyword);
-    const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
     let totalPageLimit: number | null = null;
 
     for (let p = 1; p <= pages; p++) {

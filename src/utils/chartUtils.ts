@@ -51,6 +51,8 @@ export function groupByPlatform(jobs: BaseJob[]): PlatformStat[] {
 }
 
 // ── 圖表二：前端技術標籤比例 ─────────────────────────────────
+// 計算標籤熱度而非職缺數：同一職缺若同時符合多個關鍵字（如「Vue / React 工程師」），
+// 會分別計入各自的計數，因此各標籤總和可能超過職缺總數。
 export function extractTechTags(jobs: BaseJob[]): TagStat[] {
   const counts = new Map<string, number>();
   let others = 0;
