@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { isValidJobId } from '../utils/id';
+import { requireApiKey } from '../middleware/auth';
 import {
   addFavorite,
   removeFavorite,
@@ -11,7 +12,7 @@ import {
 const router = Router();
 
 // ── POST /favorites/:id — US1 ────────────────────────────────
-router.post('/:id', async (req: Request, res: Response) => {
+router.post('/:id', requireApiKey, async (req: Request, res: Response) => {
   const { id } = req.params;
   if (!isValidJobId(id)) {
     return res.status(400).json({ ok: false, error: 'id 格式不合法，須為 8 碼十六進位字串（[0-9a-f]{8}）' });
@@ -28,7 +29,7 @@ router.post('/:id', async (req: Request, res: Response) => {
 });
 
 // ── DELETE /favorites/:id — US3 ──────────────────────────────
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', requireApiKey, async (req: Request, res: Response) => {
   const { id } = req.params;
   if (!isValidJobId(id)) {
     return res.status(400).json({ ok: false, error: 'id 格式不合法，須為 8 碼十六進位字串（[0-9a-f]{8}）' });

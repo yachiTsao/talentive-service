@@ -1,19 +1,20 @@
+import fs from 'fs';
 import { Page } from 'playwright';
 import { JobData, JobProvider, ProviderOptions } from './types';
+import { sleep } from '../utils/sleep';
 
 // Yourator Provider (新版): 不直接呼叫 API。流程: 首頁 -> 搜尋輸入 -> 送出 -> 擷取結果 -> 多頁以 URL 導航。
 export const ProviderYourator: JobProvider = {
   name: 'yourator',
   async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
     const { keyword, pages, delay, debug } = options;
-    const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
     const results: JobData[] = [];
 
     async function dump(tag: string) {
       if (!debug) return;
       try {
         const html = await page.content();
-        require('fs').writeFileSync(`debug-yourator-${tag}.html`, html, 'utf-8');
+        fs.writeFileSync(`debug-yourator-${tag}.html`, html, 'utf-8');
         console.log(`[DEBUG][yourator] 輸出 debug-yourator-${tag}.html`);
       } catch {}
     }
@@ -44,18 +45,18 @@ export const ProviderYourator: JobProvider = {
         await page.waitForURL(/\/jobs/, { timeout: 15_000 }).catch(()=>{});
       } else {
         if (debug) console.log('[DEBUG][yourator] 未找到搜尋框，直接導向搜尋結果頁');
-        await page.goto(`https://www.yourator.co/jobs?sort=most_related&term[]=${keyword}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+        await page.goto(`https://www.yourator.co/jobs?sort=most_related&term[]=${encodeURIComponent(keyword)}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
       }
     } catch (e) {
       if (debug) console.log('[DEBUG][yourator] 首頁搜尋流程失敗，改直接導向結果頁', e);
-      await page.goto(`https://www.yourator.co/jobs?sort=most_related&term[]=${keyword}`, { waitUntil: 'domcontentloaded', timeout: 60_000 }).catch(()=>{});
+      await page.goto(`https://www.yourator.co/jobs?sort=most_related&term[]=${encodeURIComponent(keyword)}`, { waitUntil: 'domcontentloaded', timeout: 60_000 }).catch(()=>{});
     }
 
     // 2) 迭代頁面: 使用 ?term=keyword&page=N，不進行 API request，只靠 HTML/JS 渲染結果。
     for (let p = 1; p <= pages; p++) {
       try {
         if (p > 1) {
-          const url = `https://www.yourator.co/jobs?sort=most_related&term=${encodeURIComponent(keyword)}[]&page=${p}`;
+          const url = `https://www.yourator.co/jobs?sort=most_related&term[]=${encodeURIComponent(keyword)}&page=${p}`;
           if (debug) console.log(`[DEBUG][yourator] 導航到第 ${p} 頁 -> ${url}`);
           await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
         }
@@ -111,7 +112,7 @@ export const ProviderYourator: JobProvider = {
         if (debug) console.log(`[DEBUG][yourator] 第 ${p} 頁擷取 ${pageJobs.length} 筆`);
         if (pageJobs.length === 0) {
           await dump(`p${p}-empty`);
-          if (p === 1) break; else break;
+          break;
         }
         results.push(...pageJobs);
         if (p < pages) await sleep(delay);

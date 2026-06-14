@@ -1,5 +1,7 @@
+import fs from 'fs';
 import { Page } from 'playwright';
 import { JobData, JobProvider, ProviderOptions } from './types';
+import { sleep } from '../utils/sleep';
 
 // 1111 人力銀行 Provider: 以瀏覽器載入搜尋結果頁，解析 DOM (不呼叫內部 API)
 // URL 範例: https://www.1111.com.tw/search/job?ks=關鍵字&page=1
@@ -15,14 +17,13 @@ export const Provider1111: JobProvider = {
   name: '1111',
   async fetch(page: Page, options: ProviderOptions): Promise<JobData[]> {
     const { keyword, pages, delay, debug } = options;
-    const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
     const results: JobData[] = [];
 
     async function dump(tag: string) {
       if (!debug) return;
       try {
         const html = await page.content();
-        require('fs').writeFileSync(`debug-1111-${tag}.html`, html, 'utf-8');
+        fs.writeFileSync(`debug-1111-${tag}.html`, html, 'utf-8');
         console.log(`[DEBUG][1111] 輸出 debug-1111-${tag}.html`);
       } catch {}
     }
@@ -67,7 +68,7 @@ export const Provider1111: JobProvider = {
               }
               // 日期: job-summary 或 mobile 顯示區: 含 mm / dd pattern
               let date = '';
-              const datePattern = /\b(0?\d{1})\s*\/\s*(\d{1,2})\b/; // e.g. 09 / 17
+              const datePattern = /\b(0?[1-9]|1[0-2])\s*\/\s*(0?[1-9]|[12]\d|3[01])\b/;
               const summary = card.querySelector('.job-summary');
               if (summary && datePattern.test(summary.textContent || '')) {
                 const m = (summary.textContent || '').match(datePattern); if (m) date = m[0].replace(/\s+/g,'');

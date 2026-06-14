@@ -1,7 +1,7 @@
 import { chromium, Browser, Page } from "playwright";
 import fs from "fs";
 import path from "path";
-import { BaseJob, JobData, ProviderOptions } from "./providers/types";
+import { BaseJob, JobData, JobProvider, ProviderOptions } from "./providers/types";
 import { generateId } from "./utils/id";
 import { ProviderYourator } from "./providers/yourator";
 import { Provider104 } from "./providers/provider104";
@@ -10,70 +10,67 @@ import { Provider1111 } from "./providers/provider1111";
 export interface CrawlerOptions extends ProviderOptions {
   providers: string[];
   output?: string; // optional: skip writing if undefined
-  debug?: boolean;
 }
 
-// Registry of provider classes
+// #2: PROVIDER_NAMES 是唯一真相。satisfies 在宣告時強制 key 完整對應，
+// 缺少或多餘任何一個 provider 都會立即得到編譯錯誤。
+const PROVIDER_NAMES = ["104", "yourator", "1111"] as const;
+type ProviderName = (typeof PROVIDER_NAMES)[number];
+
 const registry = {
   yourator: ProviderYourator,
   "104": Provider104,
   "1111": Provider1111,
-};
+} satisfies Record<ProviderName, JobProvider>;
+
+// 執行期以 string 查詢的別名，避免在 lookup 點散落強制轉型
+const providerByName: Record<string, JobProvider> = registry;
+
+export const KNOWN_PROVIDERS: ReadonlySet<string> = new Set(PROVIDER_NAMES);
+
+// #8: 共用 env 預設值，parseCliArgs 與 mergeOptions 不再各自讀取 process.env
+function getEnvDefaults() {
+  return {
+    keyword:   process.env.KEYWORD   ?? "前端工程師",
+    pages:     Number(process.env.PAGES   ?? 1)   || 1,
+    delay:     Number(process.env.DELAY   ?? 700)  || 700,
+    providers: (process.env.PROVIDERS ?? "104,yourator,1111")
+      .split(",").map((s) => s.trim()).filter(Boolean),
+    debug:  process.env.DEBUG === "true",
+    output: process.env.OUTPUT ?? "/app/data/jobs.json",
+  };
+}
 
 // CLI parser retained for direct execution usage
-interface CliOptions extends CrawlerOptions {}
-
-function parseCliArgs(): CliOptions {
+function parseCliArgs(): CrawlerOptions {
   const argv = process.argv.slice(2);
-  const get = (k: string, def?: string) => {
+  const get = (k: string, def: string) => {
     const hit = argv.find((a) => a.startsWith(`--${k}=`));
-    if (hit) return hit.split("=").slice(1).join("=");
-    return def;
+    return hit ? hit.split("=").slice(1).join("=") : def;
   };
   const has = (k: string) => argv.includes(`--${k}`);
-  const keyword = get("keyword", process.env.KEYWORD || "前端工程師")!;
-  const pages = Number(get("pages", process.env.PAGES || "1"));
-  const delay = Number(get("delay", process.env.DELAY || "700"));
-  const providers = get(
-    "providers",
-    process.env.PROVIDERS || "104,yourator,1111"
-  )!
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  const debug = has("debug") || process.env.DEBUG === "true";
-  const output = get("output", process.env.OUTPUT || "/app/data/jobs.json")!;
+  const env = getEnvDefaults();
+  const pages = Number(get("pages", String(env.pages)));
+  const delay = Number(get("delay", String(env.delay)));
   return {
-    keyword,
-    pages: pages > 0 ? pages : 1,
-    delay: isNaN(delay) ? 700 : delay,
-    providers,
-    debug,
-    output,
+    keyword:   get("keyword", env.keyword),
+    pages:     pages > 0 ? pages : 1,
+    delay:     isNaN(delay) ? 700 : delay,
+    providers: get("providers", env.providers.join(",")).split(",").map((s) => s.trim()).filter(Boolean),
+    debug:     has("debug") || env.debug,
+    output:    get("output", env.output),
   };
 }
 
 function mergeOptions(partial?: Partial<CrawlerOptions>): CrawlerOptions {
-  const envProviders = (process.env.PROVIDERS || "104,yourator,1111")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const env = getEnvDefaults();
   return {
-    keyword: partial?.keyword ?? process.env.KEYWORD ?? "前端工程師",
-    pages: Number(partial?.pages ?? process.env.PAGES ?? 1) || 1,
-    delay: Number(partial?.delay ?? process.env.DELAY ?? 700) || 700,
-    providers:
-      partial?.providers && partial.providers.length
-        ? partial.providers
-        : envProviders,
-    debug:
-      typeof partial?.debug === "boolean"
-        ? partial.debug
-        : process.env.DEBUG === "true",
-    output:
-      partial?.output === ""
-        ? undefined
-        : partial?.output ?? process.env.OUTPUT ?? "/app/data/jobs.json",
+    keyword:   partial?.keyword ?? env.keyword,
+    pages:     Number(partial?.pages ?? env.pages) || 1,
+    delay:     Number(partial?.delay ?? env.delay) || 700,
+    providers: partial?.providers?.length ? partial.providers : env.providers,
+    debug:     typeof partial?.debug === "boolean" ? partial.debug : env.debug,
+    output:    partial?.output === "" ? undefined : (partial?.output ?? env.output),
   };
 }
 
@@ -144,7 +141,7 @@ async function scrapeOnce(opts: CrawlerOptions): Promise<BaseJob[]> {
 
     // 各 provider 並行執行（FR-004），每個 provider 使用獨立 Page
     const providerTasks = opts.providers.map(async (name) => {
-      const provider = (registry as any)[name];
+      const provider = providerByName[name];
       const started = Date.now();
       if (!provider) {
         console.warn(`[WARN] 未知 provider: ${name} (跳過)`);
@@ -166,19 +163,17 @@ async function scrapeOnce(opts: CrawlerOptions): Promise<BaseJob[]> {
       }
     });
 
-    const startTimes = opts.providers.map(() => Date.now());
     const results = await Promise.allSettled(providerTasks);
 
     // 彙整結果，記錄失敗 provider（FR-005）
     for (let i = 0; i < results.length; i++) {
       const r = results[i];
       const name = opts.providers[i];
-      const elapsedMs = Date.now() - startTimes[i];
       if (r.status === "fulfilled") {
         all.push(...r.value);
       } else {
         console.warn(
-          `[PROVIDER ERROR] name=${name} error=${r.reason?.message ?? r.reason} elapsedMs=${elapsedMs}`
+          `[PROVIDER ERROR] name=${name} error=${r.reason?.message ?? r.reason}`
         );
       }
     }
