@@ -107,6 +107,19 @@ function saveMeta(meta: { at: string; count: number }): void {
 let isRunning = false;
 let lastMeta: { at: string; count: number } | null = loadMeta();
 
+/** 執行爬蟲並更新 lastMeta；/crawl 與啟動時爬取共用。呼叫前須確認 isRunning 為 false */
+async function crawlAndRecord(opts: Parameters<typeof runCrawler>[0]): Promise<BaseJob[]> {
+  isRunning = true;
+  try {
+    const data = await runCrawler(opts);
+    lastMeta = { at: new Date().toISOString(), count: data.length };
+    saveMeta(lastMeta);
+    return data;
+  } finally {
+    isRunning = false;
+  }
+}
+
 app.post("/crawl", requireApiKey, async (req: Request, res: Response) => {
   if (isRunning) {
     return res.status(409).json({ ok: false, message: "Crawler 正在執行中" });
@@ -117,12 +130,9 @@ app.post("/crawl", requireApiKey, async (req: Request, res: Response) => {
     return res.status(validation.status).json({ ok: false, error: validation.error });
   }
 
-  isRunning = true;
   const started = Date.now();
   try {
-    const data = await runCrawler(validation.opts);
-    lastMeta = { at: new Date().toISOString(), count: data.length };
-    saveMeta(lastMeta);
+    const data = await crawlAndRecord(validation.opts);
     res.json({
       ok: true,
       durationMs: Date.now() - started,
@@ -131,8 +141,6 @@ app.post("/crawl", requireApiKey, async (req: Request, res: Response) => {
     });
   } catch (e: any) {
     res.status(500).json({ ok: false, error: e.message });
-  } finally {
-    isRunning = false;
   }
 });
 
@@ -176,4 +184,11 @@ app.use('/favorites', favoritesRouter);
 
 app.listen(port, () => {
   console.log(`[API] listening on :${port}`);
+  // 每次啟動都重新爬取；背景執行不阻塞 API，期間 /health 回 running: true
+  console.log("[STARTUP] 開始啟動時爬取");
+  crawlAndRecord({})
+    .then((data) => console.log(`[STARTUP] 爬取完成，共 ${data.length} 筆`))
+    .catch((e: unknown) => {
+      console.error("[STARTUP] 爬取失敗，沿用既有資料:", e instanceof Error ? e.message : e);
+    });
 });
